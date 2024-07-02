@@ -17,6 +17,7 @@ $jobtitle->jobTitle_datetime = date("Y-m-d H:i:s");
 
 //checks newly added data if it already exists
 isNameExist($jobtitle, $jobtitle->jobTitle_level);
+isNameExist($jobtitle, $jobtitle->jobTitle_title);
 
 $query = checkCreate($jobtitle);
 

@@ -21,6 +21,7 @@ const initVal = {
   isCompanyInfoEdit: false,
   isDepartmentInfoEdit: false,
   isActive: false,
+  
   // setIsClickOutside: false,
 };
 

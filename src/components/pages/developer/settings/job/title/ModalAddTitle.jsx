@@ -1,7 +1,12 @@
 import { InputSelect, InputText } from "@/components/helpers/FormInputs";
 import { queryData } from "@/components/helpers/queryData";
 import ModalSideWrapper from "@/components/partials/modal/ModalSideWrapper";
-import { setError, setIsAdd, setMessage, setSuccess } from "@/store/storeAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setSuccess,
+} from "@/store/storeAction";
 import { StoreContext } from "@/store/storeContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
@@ -9,7 +14,7 @@ import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import * as Yup from "yup";
 
-const ModalAddTitle = ({jobtitleEdit}) => {
+const ModalAddTitle = ({ jobtitleEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [addValue, setAddValue] = React.useState("");
 
@@ -27,7 +32,7 @@ const ModalAddTitle = ({jobtitleEdit}) => {
     mutationFn: (values) =>
       queryData(
         jobtitleEdit
-          ? `/v2/jobtitle/${jobtitleEdit.jobLevel_aid}`
+          ? `/v2/jobtitle/${jobtitleEdit.jobTitle_aid}`
           : `/v2/jobtitle`,
         jobtitleEdit ? "put" : "post",
         values
@@ -66,62 +71,66 @@ const ModalAddTitle = ({jobtitleEdit}) => {
       <ModalSideWrapper>
         <div className="modal">
           <div className="modal-title">
-            <h2>Add Job Title</h2>
+            <h2>{jobtitleEdit ? "Edit" : "Add"} Job Title</h2>
             <button onClick={handleClose}>
               <GrFormClose size={25} />
             </button>
           </div>
           <div className="modal-content">
-             <Formik
-             initialValues={initVal}
-             validationSchema={yupSchema}
-             onSubmit={async (values) => {
-                 console.log(values)
-                 mutation.mutate(values);
-             }}
-             >
-                {(props) => {
-                    console.log(props);
-                    return(
-                      <Form className="modal-form">
-             
-                <div className="form-input">
-                  <div className="input-wrapper mt-4">
-                    <InputSelect label="*Job Entry Level" name="jobTitle_level"  disabled={mutation.isPending}
-                      onChange={handleChange}>
-                      <option value="" hidden></option>
-                      <option value="entry-level">Entry-level</option>
-                      <option value="intermediate">
-                        Intermediate or experienced (senior staff)
-                      </option>
-                    </InputSelect>
-                  </div>
-                  <div className="input-wrapper mt-4">
-                    <InputText
-                      label="*Job Title"
-                      type="text"
-                      name="jobTitle_title"
-                      disabled={mutation.isPending}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-              
-              <div className="form-action">
-                <div className="form-btn">
-                  <button className="btn-save rounded-md" type="submit">Add</button>
-                  <button
-                    className="btn-discard rounded-md"
-                    onClick={handleClose}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </Form>  
-                    );
-                }}
-            
+            <Formik
+              initialValues={initVal}
+              validationSchema={yupSchema}
+              onSubmit={async (values) => {
+                console.log(values);
+                mutation.mutate(values);
+              }}
+            >
+              {(props) => {
+                console.log(props);
+                return (
+                  <Form className="modal-form">
+                    <div className="form-input">
+                      <div className="input-wrapper mt-4">
+                        <InputSelect
+                          label="*Job Entry Level"
+                          name="jobTitle_level"
+                          disabled={mutation.isPending}
+                          onChange={handleChange}
+                        >
+                          <option value="" hidden></option>
+                          <option value="Entry-level">Entry-level</option>
+                          <option value="Intermediate or experienced (senior staff)">
+                            Intermediate or experienced (senior staff)
+                          </option>
+                        </InputSelect>
+                      </div>
+                      <div className="input-wrapper mt-4">
+                        <InputText
+                          label="*Job Title"
+                          type="text"
+                          name="jobTitle_title"
+                          disabled={mutation.isPending}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-action">
+                      <div className="form-btn">
+                        <button className="btn-save rounded-md" type="submit">
+                          Save
+                        </button>
+                        <button
+                          className="btn-discard rounded-md"
+                          onClick={handleClose}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </Form>
+                );
+              }}
             </Formik>
           </div>
         </div>

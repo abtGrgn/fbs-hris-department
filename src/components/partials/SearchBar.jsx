@@ -2,6 +2,7 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { setError, setIsSearch, setMessage } from "../../store/StoreAction";
 import { MdOutlineSearch } from "react-icons/md";
+import { GiConsoleController } from "react-icons/gi";
 
 const SearchBar = ({
   search,
@@ -13,6 +14,7 @@ const SearchBar = ({
   onSearch,
 }) => {
   const handleChange = (e) => {
+    console.log(e.value)
     if (e.target.value === "") {
       setOnSearch(!onSearch);
       dispatch(setIsSearch(false));
@@ -20,6 +22,7 @@ const SearchBar = ({
   };
 
   const handleSubmit = (e) => {
+ 
     e.preventDefault();
     let val = search.current.value;
 

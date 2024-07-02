@@ -6,12 +6,12 @@ require '../../../core/header.php';
 require '../../../core/functions.php';
 // require 'functions.php';
 // use needed classes
-require '../../../models/settings/company/Company.php';
+require '../../../models/settings/departments/Departments.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$company = new Company($conn);
+$departments = new Departments($conn);
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
@@ -20,7 +20,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
     checkPayload($data);
     // get data
-    $company->company_search = $data["searchValue"];
+    $departments->department_search = $data["searchValue"];
 
     // // only if filtering
     // if ($data["isFilter"]) {
@@ -41,7 +41,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     //     getQueriedData($query);
     // }
 
-    $query = checkSearch($company);
+    $query = checkSearch($departments);
     http_response_code(200);
     getQueriedData($query);
     // return 404 error if endpoint not available

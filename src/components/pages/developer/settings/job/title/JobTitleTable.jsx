@@ -4,7 +4,12 @@ import TableLoader from "@/components/partials/TableLoader";
 import ModalArchive from "@/components/partials/modal/ModalArchive";
 import ModalDelete from "@/components/partials/modal/ModalDelete";
 import ModalRestore from "@/components/partials/modal/ModalRestore";
-import { setIsAdd, setIsArchive } from "@/store/storeAction";
+import {
+  setIsAdd,
+  setIsArchive,
+  setIsDelete,
+  setIsRestore,
+} from "@/store/storeAction";
 import { StoreContext } from "@/store/storeContext";
 import React from "react";
 import { FaArchive, FaEdit } from "react-icons/fa";
@@ -102,8 +107,8 @@ const JobTitleTable = ({ setJobtitleEdit, jobtitle, isLoading }) => {
                       <Status text="Inactive" />
                     )}
                   </td>
-                  <td>Entry Level</td>
-                  <td>Associate</td>
+                  <td>{item.jobTitle_level}</td>
+                  <td>{item.jobTitle_title}</td>
                   <td className="flex gap-3 justify-end">
                     {item.jobTitle_is_active ? (
                       <>

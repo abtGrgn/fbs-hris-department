@@ -59,7 +59,7 @@ const JobTitleList = () => {
           <Footer />
         </div>
       </div>
-      {store.isSuccess && <ModalSuccess />}
+      {store.success && <ModalSuccess />}
       {store.isAdd && (
         <ModalAddTitle
           jobtitleEdit={jobtitleEdit}

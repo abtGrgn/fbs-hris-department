@@ -45,6 +45,7 @@
     @apply flex items-center gap-2;
   }
 
+  
   .navigation-content {
     @apply bg-[#9f1659] h-[calc(100vh-60px)] sm:w-0 lg:w-[195px];
   }
@@ -183,7 +184,7 @@
     @apply flex items-center justify-between;
   }
   .site-table {
-    @apply max-h-[90%] mt-3;
+    @apply max-h-[520px] mt-3 overflow-y-auto overflow-x-hidden;
   }
   .site-table table thead {
     @apply sticky top-0 left-0 z-10;
@@ -366,7 +367,6 @@
 .table-freezev2 table th:nth-child(3){
   @apply bg-[#3b82f6] sticky left-[14rem] 
 }
-
 
 
 

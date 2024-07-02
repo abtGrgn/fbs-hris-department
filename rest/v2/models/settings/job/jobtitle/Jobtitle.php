@@ -46,8 +46,8 @@ class Jobtitle{
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "jobTitle_is_active"=> $this->jobTitle_is_active,
-                "jobTitle_level"=> $this->jobTitle_Title,
-                "jobTitle_title"=> $this->jobTitle_Title,
+                "jobTitle_level"=> $this->jobTitle_level,
+                "jobTitle_title"=> $this->jobTitle_title,
                 "jobTitle_created"=> $this->jobTitle_created,
                 "jobTitle_datetime"=> $this->jobTitle_datetime,
             ]);
@@ -102,7 +102,7 @@ class Jobtitle{
             $query->execute([
                 "jobTitle_is_active" => $this->jobTitle_is_active,
                 "jobTitle_datetime" => $this->jobTitle_datetime,
-                "jobTitle_aid" => $this->jobLevel_aid,
+                "jobTitle_aid" => $this->jobTitle_aid,
             ]);
         }catch (PDOException $ex) {
             $query = false;
@@ -113,9 +113,9 @@ class Jobtitle{
     public function checkName()
   {
     try {
-      $sql = "select * from {$this->tblJobTitle} ";
-      $sql .= "where jobTitle_level = :jobTitle_level, ";
-      $sql .= "where jobTitle_title = :jobTitle_title ";
+      $sql = "select jobTitle_level, jobTitle_title from {$this->tblJobTitle} ";
+      $sql .= "where jobTitle_level = :jobTitle_level ";
+      $sql .= "and jobTitle_title = :jobTitle_title ";
       $query = $this->connection->prepare($sql);
       $query->execute([
         "jobTitle_level" => "{$this->jobTitle_level}",

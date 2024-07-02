@@ -69,7 +69,7 @@ const ModalAddLevel = ({ joblevelEdit }) => {
       <ModalSideWrapper>
         <div className="modal">
           <div className="modal-title">
-            <h2>Add Job Level</h2>
+            <h2>{joblevelEdit ? "Edit" : "Add"} Job Level</h2>
             <button onClick={handleClose}>
               <GrFormClose size={25} />
             </button>
@@ -79,40 +79,45 @@ const ModalAddLevel = ({ joblevelEdit }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values) => {
-                  console.log(values)
-                  mutation.mutate(values);
+                console.log(values);
+                mutation.mutate(values);
               }}
             >
               {(props) => {
                 console.log(props);
-                return(
+                return (
                   <Form className="modal-form">
-                <div className="form-input">
-                  <div className="input-wrapper mt-4">
-                    <InputText
-                      label="*Job Level Name"
-                      name="jobLevel_level"
-                      disabled={mutation.isPending}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
+                    <div className="form-input">
+                      <div className="input-wrapper mt-4">
+                        <InputText
+                          label="*Job Level Name"
+                          name="jobLevel_level"
+                          disabled={mutation.isPending}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
 
-                <div className="form-action">
-                  <div className="form-btn">
-                    <button className="btn-save rounded-md" type="submit" disabled={!addValue}>Add</button>
-                    <button
-                      className="btn-discard rounded-md"
-                      onClick={handleClose}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </Form>
+                    <div className="form-action">
+                      <div className="form-btn">
+                        <button
+                          className="btn-save rounded-md"
+                          type="submit"
+                          disabled={!addValue}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="btn-discard rounded-md"
+                          onClick={handleClose}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </Form>
                 );
               }}
-              
             </Formik>
           </div>
         </div>

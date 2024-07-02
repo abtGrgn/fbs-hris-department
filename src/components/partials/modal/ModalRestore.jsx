@@ -7,7 +7,7 @@ import { FaTrashRestore } from "react-icons/fa";
 import { GrFormClose } from "react-icons/gr";
 import ButtonSpinner from "../spinner/ButtonSpinner";
 
-const ModalRestore = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
+const ModalRestore = ({ setIsRestore, mysqlEndpoint, queryKey, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const handleClose = () => {
     dispatch(setIsRestore(false));

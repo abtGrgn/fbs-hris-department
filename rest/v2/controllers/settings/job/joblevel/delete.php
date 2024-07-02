@@ -9,8 +9,8 @@ $error = [];
 $returnData = [];
 if (array_key_exists("joblevelid", $_GET)) {
   // get data
-  $joblevel->joblevel_aid = $_GET['joblevelid'];
-  checkId($joblevel->joblevel_aid);
+  $joblevel->jobLevel_aid = $_GET['joblevelid'];
+  checkId($joblevel->jobLevel_aid);
   
 
   $query = checkDelete($joblevel);

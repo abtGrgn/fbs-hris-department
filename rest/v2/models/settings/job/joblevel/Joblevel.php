@@ -9,7 +9,10 @@ class Joblevel{
 
     public $connection;
     public $lastInsertedId;
-    
+    public $jobLevel_start;
+    public $jobLevel_total;
+    public $jobLevel_search;
+
     public $tblJobLevel;
 
     public function __construct($db){
@@ -118,4 +121,40 @@ class Joblevel{
     }
     return $query;
   }
+
+  public function readLimit() 
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblJobLevel} ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->jobLevel_start - 1,
+                "total" => $this->jobLevel_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function search()
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from {$this->tblJobLevel} ";
+            $sql .= "where jobLevel_level like :jobLevel_level ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "jobLevel_level" => "%{$this->jobLevel_search}%",
+                
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

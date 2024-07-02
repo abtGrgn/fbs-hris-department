@@ -18,7 +18,7 @@ const ModalError = () => {
 
     setTimeout(() => {
       handleClose();
-    },5000);
+    },6000);
   },[]);
 
   return (
