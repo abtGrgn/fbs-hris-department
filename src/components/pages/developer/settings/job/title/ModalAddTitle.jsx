@@ -1,6 +1,7 @@
 import { InputSelect, InputText } from "@/components/helpers/FormInputs";
 import { queryData } from "@/components/helpers/queryData";
 import ModalSideWrapper from "@/components/partials/modal/ModalSideWrapper";
+import ButtonSpinner from "@/components/partials/spinner/ButtonSpinner";
 import {
   setError,
   setIsAdd,
@@ -117,8 +118,12 @@ const ModalAddTitle = ({ jobtitleEdit }) => {
 
                     <div className="form-action">
                       <div className="form-btn">
-                        <button className="btn-save rounded-md" type="submit">
-                          Save
+                        <button
+                         className="btn-save rounded-md"
+                          type="submit"
+                          disabled={mutation.isPending || !props.dirty} // pag may nilagay sa form "enable ang button" pag wala "babalik sa disabled ang button"
+                          >
+                          {mutation.isPending ? <ButtonSpinner /> : "Save"}
                         </button>
                         <button
                           className="btn-discard rounded-md"

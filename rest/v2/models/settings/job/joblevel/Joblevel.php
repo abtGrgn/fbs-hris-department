@@ -128,6 +128,8 @@ class Joblevel{
             $sql = "select * ";
             $sql .= "from ";
             $sql .= "{$this->tblJobLevel} ";
+            $sql .= "order by jobLevel_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
+            $sql .= "jobLevel_aid asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);

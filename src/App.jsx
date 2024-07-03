@@ -16,6 +16,7 @@ import JobLevelList from "./components/pages/developer/settings/job/level/JobLev
 import JobList from "./components/pages/developer/settings/job/JobList";
 import JobTitleList from "./components/pages/developer/settings/job/title/JobTitleList";
 import TableFreezeV2List from "./components/pages/developer/table-freeze-v2/TableFreezeV2List";
+import EmployeesList from "./components/pages/developer/employees/EmployeesList";
 
 function App() {
   const queryClient = new QueryClient();
@@ -28,6 +29,9 @@ function App() {
               <Route path={`*`} element={<h1>404 Error</h1>} />
               <Route path={`/children`} element={<ChildrenList />} />
               <Route path={`/parent`} element={<ParentList />} />
+
+              <Route path={`/employees`} element={<EmployeesList/>}/>
+
               <Route path={`/settings`} element={<Settings />} />
 
               <Route path={`/settings/users`} element={<UsersList />} />

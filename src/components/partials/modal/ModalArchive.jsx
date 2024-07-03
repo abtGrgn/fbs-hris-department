@@ -64,6 +64,7 @@ const ModalArchive = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
             <button
               className="inline-block rounded-md w-full px-5 py-2 bg-[#9f1659] text-white"
               onClick={handleYes}
+              disabled={mutation.isPending}
             >
               {mutation.isPending ? <ButtonSpinner /> : "Yes"}
             </button>

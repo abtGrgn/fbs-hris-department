@@ -128,6 +128,8 @@ class Departments{
             $sql = "select * ";
             $sql .= "from ";
             $sql .= "{$this->tblDepartments} ";
+            $sql .= "order by department_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
+            $sql .= "department_aid asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);

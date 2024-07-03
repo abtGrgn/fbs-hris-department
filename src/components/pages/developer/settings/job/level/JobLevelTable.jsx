@@ -9,6 +9,7 @@ import ModalArchive from "@/components/partials/modal/ModalArchive";
 import ModalDelete from "@/components/partials/modal/ModalDelete";
 import ModalRestore from "@/components/partials/modal/ModalRestore";
 import FetchingSpinner from "@/components/partials/spinner/FetchingSpinner";
+import TableSpinner from "@/components/partials/spinner/TableSpinner";
 import {
   setIsAdd,
   setIsArchive,
@@ -23,7 +24,7 @@ import { FaUserGroup } from "react-icons/fa6";
 import { MdDelete, MdOutlineSearch, MdRestore } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
 
-const JobLevelTable = ({ joblevel, isLoading, setJoblevelEdit }) => {
+const JobLevelTable = ({setJoblevelEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isArchiving, setIsArchiving] = React.useState(false);
   const [id, setId] = React.useState("");
@@ -43,6 +44,7 @@ const JobLevelTable = ({ joblevel, isLoading, setJoblevelEdit }) => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
+    isLoading,
     status,
   } = useInfiniteQuery({
     queryKey: ["joblevel", onSearch, store.isSearch],
@@ -89,7 +91,8 @@ const JobLevelTable = ({ joblevel, isLoading, setJoblevelEdit }) => {
     setId(item.jobLevel_aid);
   };
 
-  React.useEffect(() => {
+  // used for loading of pages without clicking the Load more button
+  React.useEffect(() => { 
     if (inView) {
       setPage((prev) => prev + 1);
       fetchNextPage();
@@ -130,12 +133,15 @@ const JobLevelTable = ({ joblevel, isLoading, setJoblevelEdit }) => {
         </div>
       </div>
 
-      <div className="site-table">
+      <div className="site-table relative">
         <>
           {isFetching && !isFetchingNextPage && status !== "loading" && (
             <FetchingSpinner />
           )}
-          <table>
+          <table className="relative">
+          {isLoading && !isFetchingNextPage && status !== "pending" && (
+              <TableSpinner />
+            )}
             <thead>
               <tr>
                 <th>#</th>

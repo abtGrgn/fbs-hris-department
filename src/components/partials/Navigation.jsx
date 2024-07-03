@@ -137,13 +137,11 @@ const Navigation = ({ menu, submenu }) => {
                 </li>
                 <li
                   className={`px-5 py-2 flex items-center justify-between text-white ${
-                    menu === "" ? "bg-white/20 " : ""
+                    menu === "employees" ? "bg-white/20 " : ""
                   }`}
                 >
-                  <div className="navigation-item">
-                    <IoIosPeople />
-                    EMPLOYEES
-                  </div>
+                    <Link to="/employees" className="navigation-item"><IoIosPeople size={19}/>EMPLOYEES</Link> 
+                  
                 </li>
                 <li
                   className={`px-5 py-2 flex items-center justify-between text-white ${
@@ -272,20 +270,20 @@ const Navigation = ({ menu, submenu }) => {
                   </div>
                 )}
                 <li
-                  className={`px-5 py-2 flex items-center justify-between ${
+                  className={`px-5 py-2 flex items-center justify-between text-white ${
                     menu === "settings" ? "bg-white/20 text-white" : ""
                   }`}
                   onClick={handleSettingsOpen}
                 >
-                  <div className="navigation-item">
-                    <IoSettingsSharp />
+                  <div className="navigation-item ">
+                    <IoSettingsSharp  />
                     SETTINGS
                   </div>
 
                   <GoChevronDown
                     size={15}
-                    className={`duration-200 ${
-                      store.isSettingsOpen && "-rotate-180 duration-200"
+                    className={`duration-200  ${
+                      store.isSettingsOpen && "-rotate-180 duration-200 "
                     }`}
                   />
                 </li>

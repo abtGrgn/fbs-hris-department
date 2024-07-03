@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-const FetchingSpinner = () => {
+const TableSpinner = () => {
   return (
     <>
-      <div className="absolute top-0 right-0 bottom-0 left-0 justify-center flex items-center flex-col text-center bg-white/50 z-40">
+      <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center flex-col text-center bg-white/50 z-40">
         <svg
           aria-hidden="true"
           className="w-8 h-8 text-gray-700 animate-spin dark:text-gray-300 fill-primary"
@@ -23,7 +23,7 @@ const FetchingSpinner = () => {
         <span className="mt-1 text-gray-400">Loading...</span>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default FetchingSpinner;
+export default TableSpinner

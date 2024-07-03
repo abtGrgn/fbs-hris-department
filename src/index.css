@@ -250,6 +250,9 @@
   small {
     @apply absolute top-0 right-0 text-[10px] text-red-400 italic;
   }
+  span.error-show {
+    @apply absolute top-[-12px] right-0 text-[10px] text-red-400 italic;
+  }
   nav ul li {
     @apply text-sm pl-2 border-l;
   }

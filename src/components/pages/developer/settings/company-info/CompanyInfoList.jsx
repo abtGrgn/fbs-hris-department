@@ -13,9 +13,11 @@ const CompanyInfoList = () => {
     const {store} = React.useContext(StoreContext);
     const [companyEdit, setCompanyEdit] = React.useState(null);
 
+    // used if the page doesnt have a search
     const {
         isLoading,
         isFetching,
+        isFetchingNextPage,
         error,
         data: company,
       } = useQueryData(
@@ -34,7 +36,7 @@ const CompanyInfoList = () => {
                 <div className="list-content">
                     <h2>Company Info</h2>
                 </div> 
-                <CompanyInfoTable setCompanyEdit={setCompanyEdit} company={company} isLoading={isLoading}/>
+                <CompanyInfoTable setCompanyEdit={setCompanyEdit} company={company} isLoading={isLoading} isFetching={isFetching} status={status}/>
             </div>
         </div>
     </div>

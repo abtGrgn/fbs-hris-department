@@ -21,17 +21,6 @@ const JobTitleList = () => {
     setJobtitleEdit(null);
   };
 
-  const {
-    isLoading,
-    isFetching,
-    error,
-    data: jobtitle,
-  } = useQueryData(
-    `/v2/jobtitle`, // endpoint
-    "get", // method
-    "jobtitle" // key
-  );
-
   return (
     <>
       <Header avatar="LR" />
@@ -49,12 +38,7 @@ const JobTitleList = () => {
             <h2 className="text-lg font-bold -translate-y-5">Job Title</h2>
             <JobTitleTable
               setJobtitleEdit={setJobtitleEdit}
-              jobtitle={jobtitle}
-              isLoading={isLoading}
             />
-            <h5 className="text-xs text-gray-500 text-center m-10">
-              End of list.
-            </h5>
           </div>
           <Footer />
         </div>

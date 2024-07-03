@@ -10,6 +10,10 @@ class Jobtitle{
 
     public $connection;
     public $lastInsertedId;
+    public $jobTitle_start;
+    public $jobTitle_total;
+    public $jobTitle_search;
+
     
     public $tblJobTitle;
 
@@ -126,4 +130,41 @@ class Jobtitle{
     }
     return $query;
   }
+
+  public function readLimit() 
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblJobTitle} ";
+            $sql .= "order by jobTitle_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
+            $sql .= "jobTitle_aid asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->jobTitle_start - 1,
+                "total" => $this->jobTitle_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function search()
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from {$this->tblJobTitle} ";
+            $sql .= "where jobTitle_level like :jobTitle_level ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "jobTitle_level" => "%{$this->jobTitle_search}%",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const TableLoader = ({ count = 15, cols = 3 }) => {
+const TableLoader = ({ count = 24, cols = 2 }) => {
   const box = [];
   let i;
 

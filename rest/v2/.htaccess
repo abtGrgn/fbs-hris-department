@@ -16,6 +16,12 @@ RewriteRule ^parents$ controllers/parents/parents.php [L]
 RewriteRule ^parents/([0-9]+)$ controllers/parents/parents.php?parentsid=$1 [L]
 RewriteRule ^parents/active/([0-9]+)$ controllers/parents/active.php?parentsid=$1 [L]
 
+RewriteRule ^employees$ controllers/employees/employees.php [L]
+RewriteRule ^employees/([0-9]+)$ controllers/employees/employees.php?employeesid=$1 [L]
+RewriteRule ^employees/active/([0-9]+)$ controllers/employees/active.php?employeesid=$1 [L]
+RewriteRule ^employees/page/([0-9]+)$ controllers/employees/page.php?start=$1 [L]
+RewriteRule ^employees/search$ controllers/employees/search.php [L]
+
 RewriteRule ^departments$ controllers/settings/departments/departments.php [L]
 RewriteRule ^departments/([0-9]+)$ controllers/settings/departments/departments.php?departmentsid=$1 [L]
 RewriteRule ^departments/active/([0-9]+)$ controllers/settings/departments/active.php?departmentsid=$1 [L]

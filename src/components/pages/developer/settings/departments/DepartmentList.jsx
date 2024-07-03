@@ -35,7 +35,6 @@ const DepartmentList = () => {
             </div>
             <DepartmentTable
               setDepartmentEdit={setDepartmentEdit}
-              setIsAdd={setIsAdd}
             />
           </div>
           <Footer />
@@ -44,7 +43,6 @@ const DepartmentList = () => {
       {store.success && <ModalSuccess />}
       {store.isAdd && (
         <ModalAddDepartment
-          setIsAdd={setIsAdd}
           departmentEdit={departmentEdit}
           setDepartmentEdit={setDepartmentEdit}
         />

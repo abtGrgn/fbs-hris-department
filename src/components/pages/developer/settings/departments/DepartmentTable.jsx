@@ -9,6 +9,7 @@ import ModalArchive from "@/components/partials/modal/ModalArchive";
 import ModalDelete from "@/components/partials/modal/ModalDelete";
 import ModalRestore from "@/components/partials/modal/ModalRestore";
 import FetchingSpinner from "@/components/partials/spinner/FetchingSpinner";
+import TableSpinner from "@/components/partials/spinner/TableSpinner";
 import {
   setIsAdd,
   setIsArchive,
@@ -27,7 +28,7 @@ const DepartmentTable = ({ setDepartmentEdit }) => {
   const [isArchiving, setIsArchiving] = React.useState(false);
   const [id, setId] = React.useState("");
   const [isData, setIsData] = React.useState("");
-  
+
   const [onSearch, setOnSearch] = React.useState(false);
   const [page, setPage] = React.useState(1);
   const search = React.useRef({ value: "" });
@@ -42,6 +43,7 @@ const DepartmentTable = ({ setDepartmentEdit }) => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
+    isLoading,
     status,
   } = useInfiniteQuery({
     queryKey: ["departments", onSearch, store.isSearch],
@@ -60,7 +62,6 @@ const DepartmentTable = ({ setDepartmentEdit }) => {
     },
     refetchOnWindowFocus: false,
   });
-
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
@@ -89,6 +90,7 @@ const DepartmentTable = ({ setDepartmentEdit }) => {
     setId(item.department_aid);
   };
 
+  // used for loading of pages without clicking the Load more button
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -109,13 +111,17 @@ const DepartmentTable = ({ setDepartmentEdit }) => {
           onSearch={onSearch}
         />
       </div>
-      <div className="site-table">
+
+      <div className="site-table relative">
         <>
-        {isFetching && !isFetchingNextPage && status !== "loading" && (
-          <FetchingSpinner />
-        )} 
+          {isFetching && !isFetchingNextPage && status !== "loading" && (
+            <FetchingSpinner />
+          )}
           <table className="relative">
-          {console.log(status)}
+            {isLoading && !isFetchingNextPage && status !== "pending" && (
+              <TableSpinner />
+            )}
+            {console.log(status)}
             <thead>
               <tr>
                 <th>#</th>

@@ -1,11 +1,13 @@
 import NoData from "@/components/partials/NoData";
 import TableLoader from "@/components/partials/TableLoader";
+import FetchingSpinner from "@/components/partials/spinner/FetchingSpinner";
+import TableSpinner from "@/components/partials/spinner/TableSpinner";
 import { setIsAdd, setIsCompanyInfoEdit } from "@/store/storeAction";
 import { StoreContext } from "@/store/storeContext";
 import React from "react";
 import { FaPencilAlt } from "react-icons/fa";
 
-const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, item }) => {
+const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, isFetching, status }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   
 
@@ -29,7 +31,13 @@ const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, item }) => {
             </button>
           </div>
         </div>
-        <table className="mt-3">
+        {isFetching && status !== "loading" && (
+            <FetchingSpinner />
+          )}
+        <table className="mt-3 relative">
+        {isLoading && status !== "pending" && (
+              <TableSpinner/>
+            )}
           {isLoading ? (
             <TableLoader />
           ) : company?.data.length === 0 ? (

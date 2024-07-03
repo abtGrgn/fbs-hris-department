@@ -1,17 +1,17 @@
 <?php
 
 // set http header
-require '../../../../core/header.php';
+require '../../core/header.php';
 // use needed functions
-require '../../../../core/functions.php';
+require '../../core/functions.php';
 // require 'functions.php';
 // use needed classes
-require '../../../../models/settings/job/jobtitle/Jobtitle.php';
+require '../../models/Employees.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$jobtitle = new Jobtitle($conn);
+$employees = new Employees($conn);
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
@@ -20,28 +20,28 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
     checkPayload($data);
     // get data
-    $jobtitle->jobTitle_search = $data["searchValue"];
+    $employees->employees_search = $data["searchValue"];
 
     // // only if filtering
     // if ($data["isFilter"]) {
 
     //     // only if search with filter
-    //     if ($jobtitle->jobTitle_search != "") {
+    //     if ($employees->employees_search != "") {
 
-    //         $jobtitle->jobTitle_is_active = checkIndex($data, "jobTitle_is_active");
-    //         $query = checkSearchByStatus($jobtitle);
+    //         $employees->employees_is_active = checkIndex($data, "employees_is_active");
+    //         $query = checkSearchByStatus($employees);
     //         http_response_code(200);
     //         getQueriedData($query);
     //     }
 
     //     // if filter only
-    //     $jobtitle->jobTitle_is_active = checkIndex($data, "jobTitle_is_active");
-    //     $query = checkFilterByStatus($jobtitle);
+    //     $employees->employees_is_active = checkIndex($data, "employees_is_active");
+    //     $query = checkFilterByStatus($employees);
     //     http_response_code(200);
     //     getQueriedData($query);
     // }
 
-    $query = checkSearch($jobtitle);
+    $query = checkSearch($employees);
     http_response_code(200);
     getQueriedData($query);
     // return 404 error if endpoint not available
