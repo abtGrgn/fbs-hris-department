@@ -2,7 +2,7 @@ import { InputSelect, InputText } from "@/components/helpers/FormInputs";
 import { queryData } from "@/components/helpers/queryData";
 import ModalSideWrapper from "@/components/partials/modal/ModalSideWrapper";
 import ButtonSpinner from "@/components/partials/spinner/ButtonSpinner";
-import { setIsAdd } from "@/store/storeAction";
+import { setError, setIsAdd, setMessage, setSuccess } from "@/store/storeAction";
 import { StoreContext } from "@/store/storeContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
@@ -12,24 +12,21 @@ import * as Yup from "yup";
 
 const ModalAddEmployees = ({ employeesEdit, departments, jobtitle }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [addValue, setaddValue] = React.useState("");
+ 
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
 
-  const handleChange = (e) => {
-    setaddValue(e.target.value);
-  };
 
-  //to get all the active department name in the departments table
+  //activeDepartments will be an array containing only the elements from departments.data where department_is_active is 1.
   const activeDepartments = departments?.data.filter(
     (dept) => dept.department_is_active === 1
   );
 
-  //to get all the active jobtitle name in the jobtitle table
+  //activeJobtitle will be an array containing only the elements from jobtitle.data where job_title_is_active is 1.
   const activeJobtitle = jobtitle?.data.filter(
-    (job) => job.jobTitle_is_active === 1
+    (job) => job.job_title_is_active === 1
   );
 
   const queryClient = useQueryClient();
@@ -86,7 +83,7 @@ const ModalAddEmployees = ({ employeesEdit, departments, jobtitle }) => {
       <ModalSideWrapper>
         <main className="modal">
           <div className="modal-title">
-            <h2>Employees</h2>
+            <h2>{employeesEdit ? "Edit" : "Add"} Employees</h2>
             <button onClick={handleClose}>
               <GrFormClose size={25} />
             </button>
@@ -110,15 +107,13 @@ const ModalAddEmployees = ({ employeesEdit, departments, jobtitle }) => {
                           label="First Name"
                           name="employees_fname"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="input-wrapper my-4">
                         <InputText
                           label="Last Name"
                           name="employees_lname"
-                          disabled={mutation.isPending}
-                          onChange={handleChange}
+                          disabled={mutation.isPending}  
                         />
                       </div>
                       <div className="input-wrapper my-4">
@@ -127,7 +122,8 @@ const ModalAddEmployees = ({ employeesEdit, departments, jobtitle }) => {
                           name="employees_department_id"
                           disabled={mutation.isPending}
                         >
-                          <option hidden>
+                          <optgroup label="Departments">
+                            <option hidden className="text-red-400">
                             Select Department
                           </option>
                           {activeDepartments.length === 0 ? (
@@ -139,6 +135,8 @@ const ModalAddEmployees = ({ employeesEdit, departments, jobtitle }) => {
                               </option>
                             ))
                           )}
+                          </optgroup>
+                          
                         </InputSelect>
                       </div>
                       <div className="input-wrapper my-4">
@@ -147,18 +145,21 @@ const ModalAddEmployees = ({ employeesEdit, departments, jobtitle }) => {
                           name="employees_job_title_id"
                           disabled={mutation.isPending}
                         >
-                          <option hidden>
+                          <optgroup label="Job Title">
+                            <option hidden>
                             Select Job Title
                           </option>
                           {activeJobtitle.length === 0 ? (
                             <option value="">No Data</option>
                           ) : (
                             activeJobtitle.map((item, key) => (
-                              <option value={item.jobTitle_aid} key={key}>
-                                {item.jobTitle_title}
+                              <option value={item.job_title_aid} key={key}>
+                                {item.job_title_name}
                               </option>
                             ))
                           )}
+                          </optgroup>
+                          
                         </InputSelect>
                       </div>
                     </div>
@@ -167,7 +168,7 @@ const ModalAddEmployees = ({ employeesEdit, departments, jobtitle }) => {
                         <button
                           className="btn-save rounded-md"
                           type="submit"
-                          disabled={mutation.isPending || !props.dirty} // pag may nilagay sa form "enable ang button" pag wala "babalik sa disabled ang button"
+                          disabled={mutation.isPending || !props.dirty} // pag may nilagay sa form "enable ang button" pag wala "babalik sa disabled ang button" no need of HandleChange
                         >
                           {mutation.isPending ? <ButtonSpinner /> : "Save"}
                         </button>

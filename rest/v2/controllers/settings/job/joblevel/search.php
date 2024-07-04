@@ -11,7 +11,7 @@ require '../../../../models/settings/job/joblevel/Joblevel.php';
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$joblevel = new Joblevel($conn);
+$job_level = new Joblevel($conn);
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
@@ -20,28 +20,28 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
     checkPayload($data);
     // get data
-    $joblevel->jobLevel_search = $data["searchValue"];
+    $job_level->job_level_search = $data["searchValue"];
 
     // // only if filtering
     // if ($data["isFilter"]) {
 
     //     // only if search with filter
-    //     if ($joblevel->company_search != "") {
+    //     if ($job_level->company_search != "") {
 
-    //         $joblevel->company_is_active = checkIndex($data, "company_is_active");
-    //         $query = checkSearchByStatus($joblevel);
+    //         $job_level->company_is_active = checkIndex($data, "company_is_active");
+    //         $query = checkSearchByStatus($job_level);
     //         http_response_code(200);
     //         getQueriedData($query);
     //     }
 
     //     // if filter only
-    //     $joblevel->company_is_active = checkIndex($data, "company_is_active");
-    //     $query = checkFilterByStatus($joblevel);
+    //     $job_level->company_is_active = checkIndex($data, "company_is_active");
+    //     $query = checkFilterByStatus($job_level);
     //     http_response_code(200);
     //     getQueriedData($query);
     // }
 
-    $query = checkSearch($joblevel);
+    $query = checkSearch($job_level);
     http_response_code(200);
     getQueriedData($query);
     // return 404 error if endpoint not available

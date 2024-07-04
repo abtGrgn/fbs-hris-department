@@ -1,13 +1,22 @@
 import Header from '@/components/partials/Header'
 import Navigation from '@/components/partials/Navigation'
 import { BsBarChartLineFill } from "react-icons/bs";
-import React from 'react'
+import React, { useContext } from 'react'
 import { GoChevronRight } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { FaUserTie } from 'react-icons/fa';
 import Footer from '@/components/partials/Footer';
+import { StoreContext } from '@/store/storeContext';
+import { setIsSettingsOpen } from '@/store/storeAction';
 
 const JobList = () => {
+    const {store, dispatch} = useContext(StoreContext);
+
+     // used para mapanatili na bukas ang settings kahit ma-refresh
+  React.useEffect(() => {
+    dispatch(setIsSettingsOpen(true));
+  }, []);
+
   return (
     <>
         <Header avatar="AG"/>

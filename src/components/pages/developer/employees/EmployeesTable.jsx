@@ -11,7 +11,6 @@ import ModalRestore from "@/components/partials/modal/ModalRestore";
 import FetchingSpinner from "@/components/partials/spinner/FetchingSpinner";
 import TableSpinner from "@/components/partials/spinner/TableSpinner";
 import {
-  setIsActive,
   setIsAdd,
   setIsArchive,
   setIsDelete,
@@ -91,7 +90,7 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
     setId(item.employees_aid);
   };
 
-  // used for loading of pages without clicking the Load more button
+  // used for loading of pages without clicking the Load more button (automatic loading)
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -154,7 +153,7 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
             )}
             {result?.pages.map((page, key) => (
               <React.Fragment key={key}>
-                {page.data.map((item, key) => (
+                {page?.data.map((item, key) => (
                   <tr key={key}>
                     <td>{counter++}</td>
                     <td>
@@ -166,7 +165,7 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
                     </td>
                     <td>{item.employees_fname}</td>
                     <td>{item.employees_lname}</td>
-                    <td>{item.jobTitle_title}</td>
+                    <td>{item.job_title_name}</td>
                     <td>{item.department_name}</td>
                     <td className="flex gap-3 justify-end">
                       {item.employees_is_active ? (

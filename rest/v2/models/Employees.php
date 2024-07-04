@@ -17,19 +17,25 @@ class Employees{
     public $employees_search;
 
     public $tblEmployees;
-    public $tblDepartments;
-    public $tblJobtitle;
+    public $tblDepartments; //table of departments
+    public $tblJobTitle; // table of job title
 
     public function __construct($db){
         $this->connection = $db;
         $this->tblEmployees = "fbs_hris_employees";
         $this->tblDepartments = "fbs_hris_departments";
-        $this->tblJobtitle = "fbs_hris_job_title";
+        $this->tblJobTitle = "fbs_hris_job_title";
     }
 
     public function readAll(){
         try{
-            $sql = "select * from {$this->tblEmployees} ";
+            $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblEmployees} as emp, ";
+            $sql .= "{$this->tblDepartments} as dept, ";
+            $sql .= "{$this->tblJobTitle} as job ";
+            $sql .= "where emp.employees_department_id = dept.department_aid ";
+            $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
             $sql .= "order by employees_is_active desc, ";
             $sql .= "employees_aid asc ";
             $query = $this->connection->query($sql);
@@ -46,9 +52,9 @@ class Employees{
             $sql .= "from ";
             $sql .= "{$this->tblEmployees} as emp, ";
             $sql .= "{$this->tblDepartments} as dept, ";
-            $sql .= "{$this->tblJobtitle} as job ";
+            $sql .= "{$this->tblJobTitle} as job ";
             $sql .= "where emp.employees_department_id = dept.department_aid ";
-            $sql .= "and emp.employees_job_title_id = job.jobTitle_aid ";
+            $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
             $sql .= "order by employees_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
             $sql .= "employees_aid asc ";
             $sql .= "limit :start, ";
@@ -70,6 +76,8 @@ class Employees{
             $sql = "select * ";
             $sql .= "from {$this->tblEmployees} ";
             $sql .= "where employees_fname like :employees_fname ";
+            $sql .= "order by employees_is_active desc, ";
+            $sql .= "employees_aid asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "employees_fname" => "%{$this->employees_search}%",

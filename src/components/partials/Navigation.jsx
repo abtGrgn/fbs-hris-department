@@ -140,7 +140,7 @@ const Navigation = ({ menu, submenu }) => {
                     menu === "employees" ? "bg-white/20 " : ""
                   }`}
                 >
-                    <Link to="/employees" className="navigation-item"><IoIosPeople size={19}/>EMPLOYEES</Link> 
+                    <Link to="/employees" className="navigation-item"><IoIosPeople size={18}/>EMPLOYEES</Link> 
                   
                 </li>
                 <li

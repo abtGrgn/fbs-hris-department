@@ -45,6 +45,7 @@ RewriteRule ^jobtitle/active/([0-9]+)$ controllers/settings/job/jobtitle/active.
 RewriteRule ^jobtitle/page/([0-9]+)$ controllers/settings/job/jobtitle/page.php?start=$1 [L]
 RewriteRule ^jobtitle/search$ controllers/settings/job/jobtitle/search.php [L]
 
+
 RewriteRule ^role$ controllers/settings/users/role/role.php [L]
 RewriteRule ^role/([0-9]+)$ controllers/settings/users/role/role.php?roleid=$1 [L]
 RewriteRule ^role/active/([0-9]+)$ controllers/settings/users/role/active.php?roleid=$1 [L]

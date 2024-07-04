@@ -1,17 +1,17 @@
 <?php
 
 class Joblevel{
-    public $jobLevel_aid;
-    public $jobLevel_level;
-    public $jobLevel_is_active;
-    public $jobLevel_created;
-    public $jobLevel_datetime;
+    public $job_level_aid;
+    public $job_level_level;
+    public $job_level_is_active;
+    public $job_level_created;
+    public $job_level_datetime;
 
     public $connection;
     public $lastInsertedId;
-    public $jobLevel_start;
-    public $jobLevel_total;
-    public $jobLevel_search;
+    public $job_level_start;
+    public $job_level_total;
+    public $job_level_search;
 
     public $tblJobLevel;
 
@@ -23,8 +23,8 @@ class Joblevel{
     public function readAll(){
         try{
             $sql = "select * from {$this->tblJobLevel} ";
-            $sql .= "order by jobLevel_is_active desc, ";
-            $sql .= "jobLevel_aid asc ";
+            $sql .= "order by job_level_is_active desc, ";
+            $sql .= "job_level_aid asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -32,110 +32,20 @@ class Joblevel{
         return $query;
     }
 
-    public function create() {
-        try{
-            $sql = "insert into {$this->tblJobLevel}";
-            $sql .= "(jobLevel_is_active, ";
-            $sql .= "jobLevel_level, ";
-            $sql .= "jobLevel_created, ";
-            $sql .= "jobLevel_datetime ) values ( ";
-            $sql .= ":jobLevel_is_active, ";
-            $sql .= ":jobLevel_level, ";
-            $sql .= ":jobLevel_created, ";
-            $sql .= ":jobLevel_datetime )";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "jobLevel_is_active"=> $this->jobLevel_is_active,
-                "jobLevel_level"=> $this->jobLevel_level,
-                "jobLevel_created"=> $this->jobLevel_created,
-                "jobLevel_datetime"=> $this->jobLevel_datetime,
-            ]);
-            $this->lastInsertedId = $this->connection->lastInsertId();
-        }catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-    public function update(){
-        try{
-            $sql = "update {$this->tblJobLevel} set ";
-            $sql .= "jobLevel_level = :jobLevel_level, ";
-            $sql .= "jobLevel_datetime = :jobLevel_datetime ";
-            $sql .= "where jobLevel_aid = :jobLevel_aid";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "jobLevel_level" => $this->jobLevel_level,
-                "jobLevel_datetime" => $this->jobLevel_datetime,
-                "jobLevel_aid" => $this->jobLevel_aid,
-            ]); 
-        }catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-    public function delete() {
-        try{
-            $sql = "delete from {$this->tblJobLevel} ";
-            $sql .= "where jobLevel_aid = :jobLevel_aid ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "jobLevel_aid" => $this->jobLevel_aid,
-            ]);
-        }catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-    public function active() {
-        try{
-            $sql = "update {$this->tblJobLevel} set ";
-            $sql .= "jobLevel_is_active = :jobLevel_is_active, ";
-            $sql .= "jobLevel_datetime = :jobLevel_datetime ";
-            $sql .= "where jobLevel_aid = :jobLevel_aid ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "jobLevel_is_active" => $this->jobLevel_is_active,
-                "jobLevel_datetime" => $this->jobLevel_datetime,
-                "jobLevel_aid" => $this->jobLevel_aid,
-            ]);
-        }catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-    public function checkName()
-  {
-    try {
-      $sql = "select jobLevel_level from {$this->tblJobLevel} ";
-      $sql .= "where jobLevel_level = :jobLevel_level ";
-      $query = $this->connection->prepare($sql);
-      $query->execute([
-        "jobLevel_level" => "{$this->jobLevel_level}",
-      ]);
-    } catch (PDOException $ex) {
-      $query = false;
-    }
-    return $query;
-  }
-
-  public function readLimit() 
+    public function readLimit() 
     {
         try {
             $sql = "select * ";
             $sql .= "from ";
             $sql .= "{$this->tblJobLevel} ";
-            $sql .= "order by jobLevel_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
-            $sql .= "jobLevel_aid asc ";
+            $sql .= "order by job_level_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
+            $sql .= "job_level_aid asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "start" => $this->jobLevel_start - 1,
-                "total" => $this->jobLevel_total,
+                "start" => $this->job_level_start - 1,
+                "total" => $this->job_level_total,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -148,10 +58,10 @@ class Joblevel{
         try {
             $sql = "select * ";
             $sql .= "from {$this->tblJobLevel} ";
-            $sql .= "where jobLevel_level like :jobLevel_level ";
+            $sql .= "where job_level_level like :job_level_level ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "jobLevel_level" => "%{$this->jobLevel_search}%",
+                "job_level_level" => "%{$this->job_level_search}%",
                 
             ]);
         } catch (PDOException $ex) {
@@ -159,4 +69,97 @@ class Joblevel{
         }
         return $query;
     }
+    
+
+    public function create() {
+        try{
+            $sql = "insert into {$this->tblJobLevel}";
+            $sql .= "(job_level_is_active, ";
+            $sql .= "job_level_level, ";
+            $sql .= "job_level_created, ";
+            $sql .= "job_level_datetime ) values ( ";
+            $sql .= ":job_level_is_active, ";
+            $sql .= ":job_level_level, ";
+            $sql .= ":job_level_created, ";
+            $sql .= ":job_level_datetime )";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "job_level_is_active"=> $this->job_level_is_active,
+                "job_level_level"=> $this->job_level_level,
+                "job_level_created"=> $this->job_level_created,
+                "job_level_datetime"=> $this->job_level_datetime,
+            ]);
+            $this->lastInsertedId = $this->connection->lastInsertId();
+        }catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function update(){
+        try{
+            $sql = "update {$this->tblJobLevel} set ";
+            $sql .= "job_level_level = :job_level_level, ";
+            $sql .= "job_level_datetime = :job_level_datetime ";
+            $sql .= "where job_level_aid = :job_level_aid";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "job_level_level" => $this->job_level_level,
+                "job_level_datetime" => $this->job_level_datetime,
+                "job_level_aid" => $this->job_level_aid,
+            ]); 
+        }catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function delete() {
+        try{
+            $sql = "delete from {$this->tblJobLevel} ";
+            $sql .= "where job_level_aid = :job_level_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "job_level_aid" => $this->job_level_aid,
+            ]);
+        }catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function active() {
+        try{
+            $sql = "update {$this->tblJobLevel} set ";
+            $sql .= "job_level_is_active = :job_level_is_active, ";
+            $sql .= "job_level_datetime = :job_level_datetime ";
+            $sql .= "where job_level_aid = :job_level_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "job_level_is_active" => $this->job_level_is_active,
+                "job_level_datetime" => $this->job_level_datetime,
+                "job_level_aid" => $this->job_level_aid,
+            ]);
+        }catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function checkName()
+  {
+    try {
+      $sql = "select job_level_level from {$this->tblJobLevel} ";
+      $sql .= "where job_level_level = :job_level_level ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "job_level_level" => "{$this->job_level_level}",
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
+
+  
 }

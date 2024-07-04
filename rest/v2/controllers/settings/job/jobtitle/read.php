@@ -3,21 +3,21 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$jobtitle = new Jobtitle($conn);
+$job_title = new Jobtitle($conn);
 // get $_GET data
 $error = [];
 $returnData = [];
 
 if (array_key_exists("jobtitleid", $_GET)) {
-  $jobtitle->jobTitle_aid = $_GET['jobtitleid'];
-  checkId($jobtitle->jobTitle_aid);
-  $query = checkReadById($jobtitle);
+  $job_title->job_title_aid = $_GET['jobtitleid'];
+  checkId($job_title->job_title_aid);
+  $query = checkReadById($job_title);
   http_response_code(200);
   getQueriedData($query);
 }
 
 if (empty($_GET)) {
-  $query = checkReadAll($jobtitle);
+  $query = checkReadAll($job_title);
   http_response_code(200);
   getQueriedData($query);
 }

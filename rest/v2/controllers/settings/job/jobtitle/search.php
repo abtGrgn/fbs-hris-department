@@ -11,7 +11,7 @@ require '../../../../models/settings/job/jobtitle/Jobtitle.php';
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$jobtitle = new Jobtitle($conn);
+$job_title = new Jobtitle($conn);
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
@@ -20,28 +20,28 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
     checkPayload($data);
     // get data
-    $jobtitle->jobTitle_search = $data["searchValue"];
+    $job_title->job_title_search = $data["searchValue"];
 
     // // only if filtering
     // if ($data["isFilter"]) {
 
     //     // only if search with filter
-    //     if ($jobtitle->jobTitle_search != "") {
+    //     if ($job_title->job_title_search != "") {
 
-    //         $jobtitle->jobTitle_is_active = checkIndex($data, "jobTitle_is_active");
-    //         $query = checkSearchByStatus($jobtitle);
+    //         $job_title->job_title_is_active = checkIndex($data, "job_title_is_active");
+    //         $query = checkSearchByStatus($job_title);
     //         http_response_code(200);
     //         getQueriedData($query);
     //     }
 
     //     // if filter only
-    //     $jobtitle->jobTitle_is_active = checkIndex($data, "jobTitle_is_active");
-    //     $query = checkFilterByStatus($jobtitle);
+    //     $job_title->job_title_is_active = checkIndex($data, "job_title_is_active");
+    //     $query = checkFilterByStatus($job_title);
     //     http_response_code(200);
     //     getQueriedData($query);
     // }
 
-    $query = checkSearch($jobtitle);
+    $query = checkSearch($job_title);
     http_response_code(200);
     getQueriedData($query);
     // return 404 error if endpoint not available

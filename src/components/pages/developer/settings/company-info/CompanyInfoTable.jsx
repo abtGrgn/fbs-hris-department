@@ -1,4 +1,5 @@
 import NoData from "@/components/partials/NoData";
+import ServerError from "@/components/partials/ServerError";
 import TableLoader from "@/components/partials/TableLoader";
 import FetchingSpinner from "@/components/partials/spinner/FetchingSpinner";
 import TableSpinner from "@/components/partials/spinner/TableSpinner";
@@ -7,7 +8,7 @@ import { StoreContext } from "@/store/storeContext";
 import React from "react";
 import { FaPencilAlt } from "react-icons/fa";
 
-const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, isFetching, status }) => {
+const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, isFetching, status, error }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   
 
@@ -31,19 +32,34 @@ const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, isFetching, stat
             </button>
           </div>
         </div>
-        {isFetching && status !== "loading" && (
+        
+        <table className="mt-3 relative">
+          {isFetching && status !== "loading" && (
             <FetchingSpinner />
           )}
-        <table className="mt-3 relative">
-        {isLoading && status !== "pending" && (
+       
+            <tbody className="relative">
+               {isLoading && status !== "pending" && (
               <TableSpinner/>
             )}
-          {isLoading ? (
-            <TableLoader />
-          ) : company?.data.length === 0 ? (
-            <NoData />
-          ) : (
-            <tbody>
+          {status === "pending" && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    {status === "pending" ? (
+                      <TableLoader count={20} cols={3} />
+                    ) : (
+                      <NoData />
+                    )}
+                  </td>
+                </tr>
+              )}
+              {error && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    <ServerError />
+                  </td>
+                </tr>
+              )}
               {company?.data.map((item, key) => (
                 <>
                   <tr key={key}>
@@ -99,7 +115,7 @@ const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, isFetching, stat
                 </>
               ))}
             </tbody>
-          )}
+          
         </table>
         <div className="company-info-top mt-10">
           <div className="company-info-top-title">

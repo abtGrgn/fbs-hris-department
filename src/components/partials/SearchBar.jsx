@@ -56,6 +56,8 @@ const SearchBar = ({
           <MdOutlineSearch />
         </div>
       </div>
+
+      {/* para sa count of results ng na search */}
       {/* {store.isSearch && (
         <p>Result: {isFetching ? "Searching..." : result?.[0].count}</p>
       )} */}

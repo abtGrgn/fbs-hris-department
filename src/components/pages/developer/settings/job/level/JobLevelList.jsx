@@ -6,7 +6,7 @@ import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
 import JobLevelTable from "./JobLevelTable";
 import ModalAddLevel from "./ModalAddLevel";
 import { StoreContext } from "@/store/storeContext";
-import { setIsAdd } from "@/store/storeAction";
+import { setIsAdd, setIsSettingsOpen } from "@/store/storeAction";
 import Footer from "@/components/partials/Footer";
 import ModalSuccess from "@/components/partials/modal/ModalSuccess";
 import ModalError from "@/components/partials/modal/ModalError";
@@ -20,6 +20,11 @@ const JobLevelList = () => {
     dispatch(setIsAdd(true));
     setJoblevelEdit(null);
   };
+
+  // used para mapanatili na bukas ang settings/submenu kahit ma-refresh
+  React.useEffect(() => {
+    dispatch(setIsSettingsOpen(true));
+  }, []);
 
   return (
     <>

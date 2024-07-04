@@ -12,7 +12,7 @@ require '../../../../models/settings/job/joblevel/Joblevel.php';
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$joblevel = new Joblevel($conn);
+$job_level = new Joblevel($conn);
 $response = new Response();
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
@@ -21,19 +21,19 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     if (array_key_exists("start", $_GET)) {
         // get data
         // get task id from query string
-        $joblevel->jobLevel_start = $_GET['start'];
-        $joblevel->jobLevel_total = 11;
+        $job_level->job_level_start = $_GET['start'];
+        $job_level->job_level_total = 11;
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkLimitId($joblevel->jobLevel_start, $joblevel->jobLevel_total);
+        checkLimitId($job_level->job_level_start, $job_level->job_level_total);
 
-        $query = checkReadLimit($joblevel);
-        $total_result = checkReadAll($joblevel);
+        $query = checkReadLimit($job_level);
+        $total_result = checkReadAll($job_level);
         http_response_code(200);
         checkReadQuery(
             $query,
             $total_result,
-            $joblevel->jobLevel_total,
-            $joblevel->jobLevel_start
+            $job_level->job_level_total,
+            $job_level->job_level_start
         );
     }
     // return 404 error if endpoint not available

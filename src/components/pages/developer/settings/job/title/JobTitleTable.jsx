@@ -21,7 +21,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaArchive, FaEdit } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
-import { MdDelete, MdOutlineSearch, MdRestore } from "react-icons/md";
+import { MdDelete, MdRestore } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
 
 const JobTitleTable = ({ setJobtitleEdit }) => {
@@ -70,25 +70,25 @@ const JobTitleTable = ({ setJobtitleEdit }) => {
   };
 
   const handleArchive = (item) => {
-    setIsData(item.jobTitle_level);
+    setIsData(item.job_title_job_level_id);
     dispatch(setIsArchive(true));
-    setId(item.jobTitle_aid);
+    setId(item.job_title_aid);
     setIsArchiving(true);
     setIsRestore(false);
   };
 
   const handleRestore = (item) => {
-    setIsData(item.jobTitle_level);
+    setIsData(item.job_title_job_level_id);
     dispatch(setIsRestore(true));
-    setId(item.jobTitle_aid);
+    setId(item.job_title_aid);
     setIsArchiving(false);
     setIsRestore(true);
   };
 
   const handleDelete = (item) => {
-    setIsData(item.jobTitle_level);
+    setIsData(item.job_title_name);
     dispatch(setIsDelete(true));
-    setId(item.jobTitle_aid);
+    setId(item.job_title_aid);
   };
 
   // used for loading of pages without clicking the Load more button
@@ -115,7 +115,8 @@ const JobTitleTable = ({ setJobtitleEdit }) => {
             <span>
               <FaUserGroup className="text-gray-500" />
             </span>
-            <h3 className="text-gray-500">4</h3>
+            {result?.pages[0].data.length}
+            {/* to count the number of results o laman ng table */}
           </div>
         </div>
         <div className="search">
@@ -174,16 +175,16 @@ const JobTitleTable = ({ setJobtitleEdit }) => {
                     <tr key={key}>
                       <td>{counter++}</td>
                       <td>
-                        {item.jobTitle_is_active === 1 ? (
+                        {item.job_title_is_active === 1 ? (
                           <Status text="Active" />
                         ) : (
                           <Status text="Inactive" />
                         )}
                       </td>
-                      <td>{item.jobTitle_level}</td>
-                      <td>{item.jobTitle_title}</td>
+                      <td>{item.job_level_level}</td>
+                      <td>{item.job_title_name}</td>
                       <td className="flex gap-3 justify-end">
-                        {item.jobTitle_is_active ? (
+                        {item.job_title_is_active ? (
                           <>
                             <button
                               className="tooltip"

@@ -5,7 +5,7 @@ import { MdOutlineAdd } from "react-icons/md";
 import DepartmentTable from "./DepartmentTable";
 import ModalAddDepartment from "./ModalAddDepartment";
 import { StoreContext } from "@/store/storeContext";
-import { setIsAdd } from "@/store/storeAction";
+import { setIsAdd, setIsSettingsOpen } from "@/store/storeAction";
 import Footer from "@/components/partials/Footer";
 import ModalError from "@/components/partials/modal/ModalError";
 import ModalSuccess from "@/components/partials/modal/modalSuccess";
@@ -18,6 +18,11 @@ const DepartmentList = () => {
     dispatch(setIsAdd(true));
     setDepartmentEdit(null);
   };
+
+  // used para mapanatili na bukas ang settings/submenu kahit ma-refresh
+  React.useEffect(() => {
+    dispatch(setIsSettingsOpen(true));
+  }, []);
 
   return (
     <>

@@ -24,7 +24,7 @@ import { FaUserGroup } from "react-icons/fa6";
 import { MdDelete, MdOutlineSearch, MdRestore } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
 
-const JobLevelTable = ({setJoblevelEdit }) => {
+const JobLevelTable = ({ setJoblevelEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isArchiving, setIsArchiving] = React.useState(false);
   const [id, setId] = React.useState("");
@@ -70,29 +70,29 @@ const JobLevelTable = ({setJoblevelEdit }) => {
   };
 
   const handleArchive = (item) => {
-    setIsData(item.jobLevel_level);
+    setIsData(item.job_level_level);
     dispatch(setIsArchive(true));
-    setId(item.jobLevel_aid);
+    setId(item.job_level_aid);
     setIsArchiving(true);
     setIsRestore(false);
   };
 
   const handleRestore = (item) => {
-    setIsData(item.jobLevel_level);
+    setIsData(item.job_level_level);
     dispatch(setIsRestore(true));
-    setId(item.jobLevel_aid);
+    setId(item.job_level_aid);
     setIsArchiving(false);
     setIsRestore(true);
   };
 
   const handleDelete = (item) => {
-    setIsData(item.jobLevel_level);
+    setIsData(item.job_level_level);
     dispatch(setIsDelete(true));
-    setId(item.jobLevel_aid);
+    setId(item.job_level_aid);
   };
 
   // used for loading of pages without clicking the Load more button
-  React.useEffect(() => { 
+  React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
       fetchNextPage();
@@ -117,7 +117,8 @@ const JobLevelTable = ({setJoblevelEdit }) => {
             <span>
               <FaUserGroup className="text-gray-500" />
             </span>
-            <h3 className="text-gray-500">2</h3>
+            {result?.pages[0].data.length}
+            {/* to count the number of results o laman ng table */}
           </div>
         </div>
         <div className="search">
@@ -139,7 +140,7 @@ const JobLevelTable = ({setJoblevelEdit }) => {
             <FetchingSpinner />
           )}
           <table className="relative">
-          {isLoading && !isFetchingNextPage && status !== "pending" && (
+            {isLoading && !isFetchingNextPage && status !== "pending" && (
               <TableSpinner />
             )}
             <thead>
@@ -175,15 +176,15 @@ const JobLevelTable = ({setJoblevelEdit }) => {
                     <tr key={key}>
                       <td>{counter++}</td>
                       <td>
-                        {item.jobLevel_is_active === 1 ? (
+                        {item.job_level_is_active === 1 ? (
                           <Status text="Active" />
                         ) : (
                           <Status text="Inactive" />
                         )}
                       </td>
-                      <td>{item.jobLevel_level}</td>
+                      <td>{item.job_level_level}</td>
                       <td className="flex gap-3 justify-end">
-                        {item.jobLevel_is_active ? (
+                        {item.job_level_is_active ? (
                           <>
                             <button
                               className="tooltip"

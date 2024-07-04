@@ -3,22 +3,22 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$jobtitle = new Jobtitle($conn);
+$job_title = new Jobtitle($conn);
 // get should not be present
 
 // check data
 checkPayload($data);
 // get data
-$jobtitle->jobTitle_is_active = 1;
-$jobtitle->jobTitle_level = checkIndex($data, "jobTitle_level");
-$jobtitle->jobTitle_title = checkIndex($data, "jobTitle_title");
-$jobtitle->jobTitle_created = date("Y-m-d H:i:s");
-$jobtitle->jobTitle_datetime = date("Y-m-d H:i:s");
+$job_title->job_title_is_active = 1;
+$job_title->job_title_job_level_id = checkIndex($data, "job_title_job_level_id");
+$job_title->job_title_name = checkIndex($data, "job_title_name");
+$job_title->job_title_created = date("Y-m-d H:i:s");
+$job_title->job_title_datetime = date("Y-m-d H:i:s");
 
 //checks newly added data if it already exists
-isNameExist($jobtitle, $jobtitle->jobTitle_level);
-isNameExist($jobtitle, $jobtitle->jobTitle_title);
+isNameExist($job_title, $job_title->job_title_job_level_id);
+isNameExist($job_title, $job_title->job_title_name);
 
-$query = checkCreate($jobtitle);
+$query = checkCreate($job_title);
 
-returnSuccess($jobtitle, "jobtitle", $query);
+returnSuccess($job_title, "jobtitle", $query);

@@ -224,13 +224,13 @@
     @apply relative;
   }
   .tooltip::after {
-    @apply content-[attr(data-tooltip)] absolute bottom-full -left-5 bg-black/40 text-white text-[10px] hidden p-[2px];
+    @apply content-[attr(data-tooltip)] absolute bottom-full -left-[25px] bg-black/40 text-white text-[10px] hidden p-[2px];
   }
   .tooltip:hover::after {
     @apply block z-[999];
   }
   .input-wrapper {
-    @apply mb-2 relative flex flex-col gap-2;
+    @apply mb-2 my-[18px] relative flex flex-col gap-2;
   }
   .input-wrapper:last-child {
     @apply mb-10;
@@ -241,17 +241,17 @@
   label.error-show {
     @apply text-red-400;
   }
-  input {
-    @apply p-2 border border-gray-500 rounded-lg w-full;
-  }
   input.error-show {
+    @apply border-red-400;
+  }
+  select.error-show {
     @apply border-red-400;
   }
   small {
     @apply absolute top-0 right-0 text-[10px] text-red-400 italic;
   }
   span.error-show {
-    @apply absolute top-[-12px] right-0 text-[10px] text-red-400 italic;
+    @apply absolute top-[-15px] right-1 text-[10px] text-red-400 italic;
   }
   nav ul li {
     @apply text-sm pl-2 border-l;
@@ -303,8 +303,16 @@
   }
   input,
   select {
-    @apply border border-solid border-gray-300 p-2 rounded-lg w-full h-[40px] truncate relative text-xs;
+    @apply border border-solid border-gray-300 p-2 rounded-lg w-full h-[40px] truncate relative text-xs focus:border-[#9f1659];
   }
+  select {
+    @apply text-gray-400
+  }
+  select option{
+    @apply text-black
+  }
+
+  
   /* textarea {
     @apply block w-full p-2 border border-gray-300 border-solid rounded-lg resize-none h-28;
   } */

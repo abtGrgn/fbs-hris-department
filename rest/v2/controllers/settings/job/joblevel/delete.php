@@ -3,19 +3,19 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$joblevel = new Joblevel($conn);
+$job_level = new Joblevel($conn);
 // get $_GET data
 $error = [];
 $returnData = [];
 if (array_key_exists("joblevelid", $_GET)) {
   // get data
-  $joblevel->jobLevel_aid = $_GET['joblevelid'];
-  checkId($joblevel->jobLevel_aid);
+  $job_level->job_level_aid = $_GET['joblevelid'];
+  checkId($job_level->job_level_aid);
   
 
-  $query = checkDelete($joblevel);
+  $query = checkDelete($job_level);
 
-  returnSuccess($joblevel, "joblevel", $query);
+  returnSuccess($job_level, "joblevel", $query);
 }
 
 // return 404 error if endpoint not available

@@ -13,7 +13,7 @@ require '../../../../models/settings/job/jobtitle/Jobtitle.php';
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$jobtitle = new Jobtitle($conn);
+$job_title = new Jobtitle($conn);
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
@@ -24,13 +24,13 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
   if (array_key_exists("jobtitleid", $_GET)) {
     // check data
     checkPayload($data);
-    $jobtitle->jobTitle_aid = $_GET['jobtitleid'];
-    $jobtitle->jobTitle_is_active = trim($data["isActive"]);
-    $jobtitle->jobTitle_datetime = date("Y-m-d H:i:s");
-    checkId($jobtitle->jobTitle_aid);
-    $query = checkActive($jobtitle);
+    $job_title->job_title_aid = $_GET['jobtitleid'];
+    $job_title->job_title_is_active = trim($data["isActive"]);
+    $job_title->job_title_datetime = date("Y-m-d H:i:s");
+    checkId($job_title->job_title_aid);
+    $query = checkActive($job_title);
     http_response_code(200);
-    returnSuccess($jobtitle, "jobtitle", $query);
+    returnSuccess($job_title, "jobtitle", $query);
   }
   // return 404 error if endpoint not available
   checkEndpoint();

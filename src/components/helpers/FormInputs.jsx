@@ -1,8 +1,10 @@
 import { useField } from "formik";
+
+// INPUT 
 export const InputText = ({
   label = "",
   required = true,
-  className = "text-[12px]",
+  className = "text-[12px]  focus:outline-[#9f1659] " ,
   onChange = null,
   refVal = null,
   ...props

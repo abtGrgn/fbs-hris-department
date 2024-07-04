@@ -32,6 +32,45 @@ class Departments{
         return $query;
     }
 
+    public function readLimit() 
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblDepartments} ";
+            $sql .= "order by department_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
+            $sql .= "department_aid asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->department_start - 1,
+                "total" => $this->department_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    public function search()
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from {$this->tblDepartments} ";
+            $sql .= "where department_name like :department_name ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "department_name" => "%{$this->department_search}%",
+                
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     public function create() {
         try{
             $sql = "insert into {$this->tblDepartments}";
@@ -122,44 +161,7 @@ class Departments{
     return $query;
   }
 
-  public function readLimit() 
-    {
-        try {
-            $sql = "select * ";
-            $sql .= "from ";
-            $sql .= "{$this->tblDepartments} ";
-            $sql .= "order by department_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
-            $sql .= "department_aid asc ";
-            $sql .= "limit :start, ";
-            $sql .= ":total ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "start" => $this->department_start - 1,
-                "total" => $this->department_total,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-
-    public function search()
-    {
-        try {
-            $sql = "select * ";
-            $sql .= "from {$this->tblDepartments} ";
-            $sql .= "where department_name like :department_name ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "department_name" => "%{$this->department_search}%",
-                
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
+  
 
 
 }

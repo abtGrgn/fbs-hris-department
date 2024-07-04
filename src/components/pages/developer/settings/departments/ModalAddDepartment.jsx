@@ -17,14 +17,10 @@ import ButtonSpinner from "@/components/partials/spinner/ButtonSpinner";
 
 const ModalAddDepartment = ({ departmentEdit }) => {
   const { dispatch, store } = React.useContext(StoreContext);
-  const [addValue, setAddValue] = React.useState("");
+  
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
-  };
-
-  const handleChange = (e) => {
-    setAddValue(e.target.value);
   };
 
   const queryClient = useQueryClient();
@@ -90,11 +86,10 @@ const ModalAddDepartment = ({ departmentEdit }) => {
                   <div className="form-input">
                     <div className="input-wrapper my-4">
                       <InputText
-                        id="department_name"
                         label="*Department Name"
                         name="department_name"
                         disabled={mutation.isPending}
-                        onChange={handleChange}
+                        
                       />
                     </div>
                   </div>

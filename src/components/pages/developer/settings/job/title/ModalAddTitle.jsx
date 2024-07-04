@@ -15,17 +15,18 @@ import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import * as Yup from "yup";
 
-const ModalAddTitle = ({ jobtitleEdit }) => {
+const ModalAddTitle = ({ jobtitleEdit, joblevel }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [addValue, setAddValue] = React.useState("");
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
 
-  const handleChange = (e) => {
-    setAddValue(e.target.value);
-  };
+  //activeJoblevel will be an array containing only the elements from joblevel.data where job_level_is_active is 1.
+  const activeJoblevel = joblevel?.data.filter(
+    (level) => level.job_level_is_active === 1
+  );
+  
 
   const queryClient = useQueryClient();
 
@@ -33,7 +34,7 @@ const ModalAddTitle = ({ jobtitleEdit }) => {
     mutationFn: (values) =>
       queryData(
         jobtitleEdit
-          ? `/v2/jobtitle/${jobtitleEdit.jobTitle_aid}`
+          ? `/v2/jobtitle/${jobtitleEdit.job_title_aid}`
           : `/v2/jobtitle`,
         jobtitleEdit ? "put" : "post",
         values
@@ -56,16 +57,16 @@ const ModalAddTitle = ({ jobtitleEdit }) => {
   });
 
   const initVal = {
-    jobTitle_aid: jobtitleEdit ? jobtitleEdit.jobTitle_aid : "",
-    jobTitle_level: jobtitleEdit ? jobtitleEdit.jobTitle_level : "",
-    jobTitle_title: jobtitleEdit ? jobtitleEdit.jobTitle_title : "",
+    job_title_aid: jobtitleEdit ? jobtitleEdit.job_title_aid : "",
+    job_title_job_level_id: jobtitleEdit ? jobtitleEdit.job_title_job_level_id : "",
+    job_title_name: jobtitleEdit ? jobtitleEdit.job_title_name : "",
 
-    jobTitle_level_old: jobtitleEdit ? jobtitleEdit.jobTitle_level : "",
-    jobTitle_title_old: jobtitleEdit ? jobtitleEdit.jobTitle_title : "",
+    job_title_job_level_id_old: jobtitleEdit ? jobtitleEdit.job_title_job_level_id : "",
+    job_title_name_old: jobtitleEdit ? jobtitleEdit.job_title_name : "",
   };
   const yupSchema = Yup.object({
-    jobTitle_level: Yup.string().required("Required"),
-    jobTitle_title: Yup.string().required("Required"),
+    job_title_job_level_id: Yup.string().required("Required"),
+    job_title_name: Yup.string().required("Required"),
   });
   return (
     <>
@@ -91,27 +92,32 @@ const ModalAddTitle = ({ jobtitleEdit }) => {
                 return (
                   <Form className="modal-form">
                     <div className="form-input">
-                      <div className="input-wrapper mt-4">
+                      <div className="input-wrapper">
                         <InputSelect
-                          label="*Job Entry Level"
-                          name="jobTitle_level"
+                          label="*Job Level"
+                          name="job_title_job_level_id"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         >
-                          <option value="" hidden></option>
-                          <option value="Entry-level">Entry-level</option>
-                          <option value="Intermediate or experienced (senior staff)">
-                            Intermediate or experienced (senior staff)
+                          <option value="" hidden>
+                            Select Job Level
                           </option>
+                          {activeJoblevel.length === 0 ? (
+                            <option value="">No Data</option>
+                          ) : (
+                            activeJoblevel.map((item, key) => (
+                              <option value={item.job_level_aid} key={key}>
+                                {item.job_level_level}
+                              </option>
+                            ))
+                          )}
                         </InputSelect>
                       </div>
-                      <div className="input-wrapper mt-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Job Title"
                           type="text"
-                          name="jobTitle_title"
+                          name="job_title_name"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -119,10 +125,10 @@ const ModalAddTitle = ({ jobtitleEdit }) => {
                     <div className="form-action">
                       <div className="form-btn">
                         <button
-                         className="btn-save rounded-md"
+                          className="btn-save rounded-md"
                           type="submit"
                           disabled={mutation.isPending || !props.dirty} // pag may nilagay sa form "enable ang button" pag wala "babalik sa disabled ang button"
-                          >
+                        >
                           {mutation.isPending ? <ButtonSpinner /> : "Save"}
                         </button>
                         <button

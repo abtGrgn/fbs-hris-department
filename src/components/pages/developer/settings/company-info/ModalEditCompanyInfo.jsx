@@ -108,7 +108,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                 return (
                   <Form className="modal-form  ">
                     <div className="form-input">
-                      <div className="input-wrapper my-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Company Name"
                           type="text"
@@ -117,7 +117,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="input-wrapper my-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Company Email"
                           type="text"
@@ -126,7 +126,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="input-wrapper my-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Company Phone"
                           type="number"
@@ -187,7 +187,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="input-wrapper my-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Navigation Background Color"
                           type="text"
@@ -196,7 +196,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="input-wrapper my-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Sub Menu Color"
                           type="text"
@@ -205,7 +205,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="input-wrapper my-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Accent Color"
                           type="text"
@@ -214,7 +214,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="input-wrapper my-4">
+                      <div className="input-wrapper">
                         <InputText
                           label="*Company Logo"
                           type="text"

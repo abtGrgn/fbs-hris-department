@@ -7,7 +7,7 @@ import { MdOutlineAdd } from "react-icons/md";
 import JobTitleTable from "./JobTitleTable";
 import ModalAddTitle from "./ModalAddTitle";
 import { StoreContext } from "@/store/storeContext";
-import { setIsAdd } from "@/store/storeAction";
+import { setIsAdd, setIsSettingsOpen } from "@/store/storeAction";
 import ModalSuccess from "@/components/partials/modal/ModalSuccess";
 import ModalError from "@/components/partials/modal/ModalError";
 import useQueryData from "@/components/custom-hooks/useQueryData";
@@ -20,6 +20,22 @@ const JobTitleList = () => {
     dispatch(setIsAdd(true));
     setJobtitleEdit(null);
   };
+
+  // used para mapanatili na bukas ang settings/submenu kahit ma-refresh
+  React.useEffect(() => {
+    dispatch(setIsSettingsOpen(true));
+  }, []);
+
+  const {
+    isLoading: joblevelIsLoading,
+    isFetching: joblevelIsFetching,
+    error: joblevelError,
+    data: joblevel,
+  } = useQueryData(
+    `/v2/joblevel`, // endpoint
+    "get", // method
+    "joblevel" // key
+  );
 
   return (
     <>
@@ -36,9 +52,7 @@ const JobTitleList = () => {
               </button>
             </div>
             <h2 className="text-lg font-bold -translate-y-5">Job Title</h2>
-            <JobTitleTable
-              setJobtitleEdit={setJobtitleEdit}
-            />
+            <JobTitleTable setJobtitleEdit={setJobtitleEdit} />
           </div>
           <Footer />
         </div>
@@ -48,6 +62,7 @@ const JobTitleList = () => {
         <ModalAddTitle
           jobtitleEdit={jobtitleEdit}
           setJobtitleEdit={setJobtitleEdit}
+          joblevel={joblevel}
         />
       )}
       {store.error && <ModalError />}

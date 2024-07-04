@@ -33,7 +33,7 @@ const ModalAddLevel = ({ joblevelEdit }) => {
     mutationFn: (values) =>
       queryData(
         joblevelEdit
-          ? `/v2/joblevel/${joblevelEdit.jobLevel_aid}`
+          ? `/v2/joblevel/${joblevelEdit.job_level_aid}`
           : `/v2/joblevel`,
         joblevelEdit ? "put" : "post",
         values
@@ -56,13 +56,13 @@ const ModalAddLevel = ({ joblevelEdit }) => {
   });
 
   const initVal = {
-    jobLevel_aid: joblevelEdit ? joblevelEdit.jobLevel_aid : "",
-    jobLevel_level: joblevelEdit ? joblevelEdit.jobLevel_level : "",
+    job_level_aid: joblevelEdit ? joblevelEdit.job_level_aid : "",
+    job_level_level: joblevelEdit ? joblevelEdit.job_level_level : "",
 
-    jobLevel_level_old: joblevelEdit ? joblevelEdit.jobLevel_level : "",
+    job_level_level_old: joblevelEdit ? joblevelEdit.job_level_level : "",
   };
   const yupSchema = Yup.object({
-    jobLevel_level: Yup.string().required("Required"),
+    job_level_level: Yup.string().required("Required"),
   });
 
   return (
@@ -92,7 +92,7 @@ const ModalAddLevel = ({ joblevelEdit }) => {
                       <div className="input-wrapper mt-4">
                         <InputText
                           label="*Job Level Name"
-                          name="jobLevel_level"
+                          name="job_level_level"
                           disabled={mutation.isPending}
                           onChange={handleChange}
                         />
