@@ -76,8 +76,6 @@ class Employees{
             $sql = "select * ";
             $sql .= "from {$this->tblEmployees} ";
             $sql .= "where employees_fname like :employees_fname ";
-            $sql .= "order by employees_is_active desc, ";
-            $sql .= "employees_aid asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "employees_fname" => "%{$this->employees_search}%",
