@@ -58,7 +58,7 @@ const EmployeesList = () => {
                 Add
               </button>
             </div>
-            <EmployeesTable setEmployeesEdit={setEmployeesEdit} />
+            <EmployeesTable setEmployeesEdit={setEmployeesEdit}  />
           </div>
           <Footer />
         </div>
