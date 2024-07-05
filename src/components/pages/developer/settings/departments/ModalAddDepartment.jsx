@@ -84,7 +84,7 @@ const ModalAddDepartment = ({ departmentEdit }) => {
               return (
                 <Form className="modal-form">
                   <div className="form-input">
-                    <div className="input-wrapper my-4">
+                    <div className="input-wrapper">
                       <InputText
                         label="*Department Name"
                         name="department_name"

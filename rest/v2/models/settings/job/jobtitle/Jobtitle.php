@@ -26,7 +26,11 @@ class Jobtitle{
 
     public function readAll(){
         try{
-            $sql = "select * from {$this->tblJobTitle} ";
+            $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblJobTitle} as title, ";
+            $sql .= "{$this->tblJobLevel} as level ";
+            $sql .= "where title.job_title_job_level_id = level.job_level_aid ";
             $sql .= "order by job_title_is_active desc, ";
             $sql .= "job_title_aid asc ";
             $query = $this->connection->query($sql);
@@ -78,9 +82,13 @@ class Jobtitle{
     {
         try {
             $sql = "select * ";
-            $sql .= "from {$this->tblJobTitle} ";
-            $sql .= "where job_title_name like :job_title_name ";
-            
+            $sql .= "from ";
+            $sql .= "{$this->tblJobTitle} as title, ";
+            $sql .= "{$this->tblJobLevel} as level ";
+            $sql .= "where title.job_title_name like :job_title_name ";
+            $sql .= "and title.job_title_job_level_id = level.job_level_aid ";
+            $sql .= "order by job_title_is_active desc, "; //para nasa baba ng table ang mga inactive or archived 
+            $sql .= "job_title_aid asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "job_title_name" => "%{$this->job_title_search}%",

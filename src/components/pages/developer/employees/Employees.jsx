@@ -11,7 +11,7 @@ import ModalSuccess from "@/components/partials/modal/ModalSuccess";
 import ModalError from "@/components/partials/modal/ModalError";
 import useQueryData from "@/components/custom-hooks/useQueryData";
 
-const EmployeesList = () => {
+const Employees = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [employeesEdit, setEmployeesEdit] = React.useState(null);
 
@@ -42,6 +42,17 @@ const EmployeesList = () => {
     "jobtitle" // key
   );
 
+  const {
+    isLoading:clientIsLoading,
+    isFetching:clientIsFetching,
+    error:clientError,
+    data: client,
+  } = useQueryData(
+    `/v2/client`, // endpoint
+    "get", // method
+    "client" // key
+  );
+
 
 
   return (
@@ -70,6 +81,7 @@ const EmployeesList = () => {
           setEmployeesEdit={setEmployeesEdit}
           departments={departments}
           jobtitle={jobtitle}
+          client={client}
         />
       )}
       {store.error && <ModalError />}
@@ -77,4 +89,4 @@ const EmployeesList = () => {
   );
 };
 
-export default EmployeesList;
+export default Employees;

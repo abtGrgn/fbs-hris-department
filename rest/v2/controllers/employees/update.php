@@ -17,6 +17,7 @@ if (array_key_exists("employeesid", $_GET)) {
   $employees->employees_lname = checkIndex($data, "employees_lname");
   $employees->employees_job_title_id = checkIndex($data, "employees_job_title_id");
   $employees->employees_department_id = checkIndex($data, "employees_department_id");
+  $employees->employees_client_id = checkIndex($data, "employees_client_id");
  
   $employees->employees_datetime = date("Y-m-d H:i:s");
   checkId($employees->employees_aid);

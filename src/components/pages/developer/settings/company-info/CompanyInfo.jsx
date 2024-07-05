@@ -9,7 +9,7 @@ import { setIsAdd, setIsSettingsOpen } from "@/store/storeAction";
 import ModalSuccess from "@/components/partials/modal/modalSuccess";
 import ModalError from "@/components/partials/modal/ModalError";
 
-const CompanyInfoList = () => {
+const CompanyInfo = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [companyEdit, setCompanyEdit] = React.useState(null);
 
@@ -60,4 +60,4 @@ const CompanyInfoList = () => {
   );
 };
 
-export default CompanyInfoList;
+export default CompanyInfo;

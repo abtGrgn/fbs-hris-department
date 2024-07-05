@@ -12,7 +12,7 @@ import ModalSuccess from "@/components/partials/modal/ModalSuccess";
 import ModalError from "@/components/partials/modal/ModalError";
 import useQueryData from "@/components/custom-hooks/useQueryData";
 
-const JobTitleList = () => {
+const JobTitle = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [jobtitleEdit, setJobtitleEdit] = React.useState(null);
 
@@ -70,4 +70,4 @@ const JobTitleList = () => {
   );
 };
 
-export default JobTitleList;
+export default JobTitle;

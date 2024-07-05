@@ -22,16 +22,25 @@ RewriteRule ^employees/active/([0-9]+)$ controllers/employees/active.php?employe
 RewriteRule ^employees/page/([0-9]+)$ controllers/employees/page.php?start=$1 [L]
 RewriteRule ^employees/search$ controllers/employees/search.php [L]
 
+RewriteRule ^profile$ controllers/profile/profile.php [L]
+RewriteRule ^profile/([0-9]+)$ controllers/profile/profile.php?profileid=$1 [L]
+RewriteRule ^profile/active/([0-9]+)$ controllers/profile/active.php?profileid=$1 [L]
+
 RewriteRule ^departments$ controllers/settings/departments/departments.php [L]
 RewriteRule ^departments/([0-9]+)$ controllers/settings/departments/departments.php?departmentsid=$1 [L]
 RewriteRule ^departments/active/([0-9]+)$ controllers/settings/departments/active.php?departmentsid=$1 [L]
 RewriteRule ^departments/page/([0-9]+)$ controllers/settings/departments/page.php?start=$1 [L]
 RewriteRule ^departments/search$ controllers/settings/departments/search.php [L]
 
+RewriteRule ^client$ controllers/client/client.php [L]
+RewriteRule ^client/([0-9]+)$ controllers/client/client.php?clientid=$1 [L]
+RewriteRule ^client/active/([0-9]+)$ controllers/client/active.php?clientid=$1 [L]
+RewriteRule ^client/page/([0-9]+)$ controllers/client/page.php?start=$1 [L]
+RewriteRule ^client/search$ controllers/client/search.php [L]
+
 RewriteRule ^company$ controllers/settings/company/company.php [L]
 RewriteRule ^company/([0-9]+)$ controllers/settings/company/company.php?companyid=$1 [L]
 RewriteRule ^company/active/([0-9]+)$ controllers/settings/company/active.php?companyid=$1 [L]
-RewriteRule ^company/page/([0-9]+)$ controllers/settings/company/page.php?start=$1 [L]
 
 RewriteRule ^joblevel$ controllers/settings/job/joblevel/joblevel.php [L]
 RewriteRule ^joblevel/([0-9]+)$ controllers/settings/job/joblevel/joblevel.php?joblevelid=$1 [L]

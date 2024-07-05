@@ -138,19 +138,6 @@ class Company{
         return $query;
     }
 
-    public function delete() {
-        try{
-            $sql = "delete from {$this->tblCompany} ";
-            $sql .= "where company_aid = :company_aid ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "company_aid" => $this->company_aid,
-            ]);
-        }catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
 
     public function active() {
         try{

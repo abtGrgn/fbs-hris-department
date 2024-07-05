@@ -18,14 +18,9 @@ import * as Yup from "yup";
 
 const ModalEditCompanyInfo = ({ companyEdit }) => {
   const { dispatch } = React.useContext(StoreContext);
-  const [addValue, setAddValue] = React.useState("");
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
-  };
-
-  const handleChange = (e) => {
-    setAddValue(e.target.value);
   };
 
   const queryClient = useQueryClient();
@@ -114,7 +109,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="text"
                           name="company_name"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="input-wrapper">
@@ -123,7 +117,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="text"
                           name="company_email"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="input-wrapper">
@@ -132,7 +125,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="number"
                           name="company_phone"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
 
@@ -143,7 +135,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                             type="text"
                             name="company_street"
                             disabled={mutation.isPending}
-                            onChange={handleChange}
+
                           />
                         </div>
                         <div className="input-wrapper !m-0">
@@ -152,7 +144,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                             type="text"
                             name="company_city"
                             disabled={mutation.isPending}
-                            onChange={handleChange}
+
                           />
                         </div>
                       </div>
@@ -164,7 +156,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                             type="text"
                             name="company_province"
                             disabled={mutation.isPending}
-                            onChange={handleChange}
+
                           />
                         </div>
                         <div className="input-wrapper !m-0">
@@ -173,7 +165,7 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                             type="number"
                             name="company_postal"
                             disabled={mutation.isPending}
-                            onChange={handleChange}
+
                           />
                         </div>
                       </div>
@@ -184,7 +176,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="text"
                           name="company_country"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="input-wrapper">
@@ -193,7 +184,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="text"
                           name="company_background"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="input-wrapper">
@@ -202,7 +192,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="text"
                           name="company_submenu"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="input-wrapper">
@@ -211,7 +200,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="text"
                           name="company_accent"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="input-wrapper">
@@ -220,7 +208,6 @@ const ModalEditCompanyInfo = ({ companyEdit }) => {
                           type="text"
                           name="company_logo"
                           disabled={mutation.isPending}
-                          onChange={handleChange}
                         />
                       </div>
                     </div>

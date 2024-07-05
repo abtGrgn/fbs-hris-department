@@ -6,6 +6,7 @@ class Employees{
     public $employees_lname;
     public $employees_job_title_id;
     public $employees_department_id;
+    public $employees_client_id;
     public $employees_is_active;
     public $employees_created;
     public $employees_datetime;
@@ -19,12 +20,14 @@ class Employees{
     public $tblEmployees;
     public $tblDepartments; //table of departments
     public $tblJobTitle; // table of job title
+    public $tblClient; // table of client
 
     public function __construct($db){
         $this->connection = $db;
         $this->tblEmployees = "fbs_hris_employees";
         $this->tblDepartments = "fbs_hris_departments";
         $this->tblJobTitle = "fbs_hris_job_title";
+        $this->tblClient = "fbs_hris_client";
     }
 
     public function readAll(){
@@ -33,9 +36,11 @@ class Employees{
             $sql .= "from ";
             $sql .= "{$this->tblEmployees} as emp, ";
             $sql .= "{$this->tblDepartments} as dept, ";
-            $sql .= "{$this->tblJobTitle} as job ";
+            $sql .= "{$this->tblJobTitle} as job, ";
+            $sql .= "{$this->tblClient} as client ";
             $sql .= "where emp.employees_department_id = dept.department_aid ";
             $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
+            $sql .= "and emp.employees_client_id = client.client_aid ";
             $sql .= "order by employees_is_active desc, ";
             $sql .= "employees_aid asc ";
             $query = $this->connection->query($sql);
@@ -52,9 +57,11 @@ class Employees{
             $sql .= "from ";
             $sql .= "{$this->tblEmployees} as emp, ";
             $sql .= "{$this->tblDepartments} as dept, ";
-            $sql .= "{$this->tblJobTitle} as job ";
+            $sql .= "{$this->tblJobTitle} as job, ";
+            $sql .= "{$this->tblClient} as client ";
             $sql .= "where emp.employees_department_id = dept.department_aid ";
             $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
+            $sql .= "and emp.employees_client_id = client.client_aid ";
             $sql .= "order by employees_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
             $sql .= "employees_aid asc ";
             $sql .= "limit :start, ";
@@ -70,12 +77,45 @@ class Employees{
         return $query;
     }
 
+    public function readById()
+    {
+      try {
+        $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblEmployees} as emp, ";
+            $sql .= "{$this->tblDepartments} as dept, ";
+            $sql .= "{$this->tblJobTitle} as job, ";
+            $sql .= "{$this->tblClient} as client ";
+            $sql .= "where emp.employees_department_id = dept.department_aid ";
+            $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
+            $sql .= "and emp.employees_client_id = client.client_aid ";
+        $query = $this->connection->prepare($sql);
+        $query->execute([
+          "employees_department_id" => $this->employees_department_id,
+          "job_title_aid" => $this->job_title_aid,
+          "job_client_id" => $this->job_client_id,
+        ]);
+      } catch (PDOException $ex) {
+        $query = false;
+      }
+      return $query;
+    }
+
     public function search()
     {
         try {
             $sql = "select * ";
-            $sql .= "from {$this->tblEmployees} ";
-            $sql .= "where employees_fname like :employees_fname ";
+            $sql .= "from ";
+            $sql .= "{$this->tblEmployees} as emp, ";
+            $sql .= "{$this->tblDepartments} as dept, ";
+            $sql .= "{$this->tblJobTitle} as job, ";
+            $sql .= "{$this->tblClient} as client ";
+            $sql .= "where emp.employees_fname like :employees_fname ";
+            $sql .= "and emp.employees_department_id = dept.department_aid ";
+            $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
+            $sql .= "and emp.employees_client_id = client.client_aid ";
+            $sql .= "order by employees_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
+            $sql .= "employees_aid asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "employees_fname" => "%{$this->employees_search}%",
@@ -94,6 +134,7 @@ class Employees{
             $sql .= "employees_lname, ";
             $sql .= "employees_job_title_id, ";
             $sql .= "employees_department_id, ";
+            $sql .= "employees_client_id, ";
             $sql .= "employees_created, ";
             $sql .= "employees_datetime ) values ( ";
             $sql .= ":employees_is_active, ";
@@ -101,6 +142,7 @@ class Employees{
             $sql .= ":employees_lname, ";
             $sql .= ":employees_job_title_id, ";
             $sql .= ":employees_department_id, ";
+            $sql .= ":employees_client_id, ";
             $sql .= ":employees_created, ";
             $sql .= ":employees_datetime )";
             $query = $this->connection->prepare($sql);
@@ -110,6 +152,7 @@ class Employees{
                 "employees_lname"=> $this->employees_lname,
                 "employees_job_title_id"=> $this->employees_job_title_id,
                 "employees_department_id"=> $this->employees_department_id,
+                "employees_client_id"=> $this->employees_client_id,
                 "employees_created"=> $this->employees_created,
                 "employees_datetime"=> $this->employees_datetime,
             ]);
@@ -127,6 +170,7 @@ class Employees{
             $sql .= "employees_lname = :employees_lname, ";
             $sql .= "employees_job_title_id = :employees_job_title_id, ";
             $sql .= "employees_department_id = :employees_department_id, ";
+            $sql .= "employees_client_id = :employees_client_id, ";
             $sql .= "employees_datetime = :employees_datetime ";
             $sql .= "where employees_aid = :employees_aid";
             $query = $this->connection->prepare($sql);
@@ -135,6 +179,7 @@ class Employees{
                 "employees_lname" => $this->employees_lname,
                 "employees_job_title_id" => $this->employees_job_title_id,
                 "employees_department_id" => $this->employees_department_id,
+                "employees_client_id" => $this->employees_client_id,
                 "employees_datetime" => $this->employees_datetime,
                 "employees_aid" => $this->employees_aid,
             ]); 

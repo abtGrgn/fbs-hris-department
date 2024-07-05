@@ -1,22 +1,24 @@
+import BreadCrumbs from "@/components/partials/BreadCrumbs";
 import Header from "@/components/partials/Header";
 import Navigation from "@/components/partials/Navigation";
-import React, { useState } from "react";
-import { MdOutlineAdd } from "react-icons/md";
-import DepartmentTable from "./DepartmentTable";
-import ModalAddDepartment from "./ModalAddDepartment";
+import React from "react";
+import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
+import JobLevelTable from "./JobLevelTable";
+import ModalAddLevel from "./ModalAddLevel";
 import { StoreContext } from "@/store/storeContext";
 import { setIsAdd, setIsSettingsOpen } from "@/store/storeAction";
 import Footer from "@/components/partials/Footer";
+import ModalSuccess from "@/components/partials/modal/ModalSuccess";
 import ModalError from "@/components/partials/modal/ModalError";
-import ModalSuccess from "@/components/partials/modal/modalSuccess";
+import useQueryData from "@/components/custom-hooks/useQueryData";
 
-const DepartmentList = () => {
-  const { dispatch, store } = React.useContext(StoreContext);
-  const [departmentEdit, setDepartmentEdit] = React.useState(null);
-  
+const JobLevel = () => {
+  const { store, dispatch } = React.useContext(StoreContext);
+  const [joblevelEdit, setJoblevelEdit] = React.useState(null);
+
   const handleAdd = () => {
     dispatch(setIsAdd(true));
-    setDepartmentEdit(null);
+    setJoblevelEdit(null);
   };
 
   // used para mapanatili na bukas ang settings/submenu kahit ma-refresh
@@ -27,19 +29,20 @@ const DepartmentList = () => {
   return (
     <>
       <Header avatar="LR" />
-      <div className="flex ">
-        <Navigation menu="settings" submenu="departments" />
+      <div className="flex">
+        <Navigation menu="settings" submenu="job" />
         <div className="px-4 py-1 ml-7 pb-0 w-full h-[calc(100vh-60px)] flex flex-col justify-between">
           <div className="h-screen">
             <div className="list-content">
-              <h2>Departments</h2>
-              <button className="btn-add " onClick={handleAdd}>
+              <BreadCrumbs />
+              <button className="btn-add" onClick={handleAdd}>
                 <MdOutlineAdd size={18} fontWeight="bold" />
                 Add
               </button>
             </div>
-            <DepartmentTable
-              setDepartmentEdit={setDepartmentEdit}
+            <h2 className="text-lg font-bold -translate-y-5">Job Level</h2>
+            <JobLevelTable
+              setJoblevelEdit={setJoblevelEdit}
             />
           </div>
           <Footer />
@@ -47,9 +50,9 @@ const DepartmentList = () => {
       </div>
       {store.success && <ModalSuccess />}
       {store.isAdd && (
-        <ModalAddDepartment
-          departmentEdit={departmentEdit}
-          setDepartmentEdit={setDepartmentEdit}
+        <ModalAddLevel
+          joblevelEdit={joblevelEdit}
+          setJoblevelEdit={setJoblevelEdit}
         />
       )}
       {store.error && <ModalError />}
@@ -57,4 +60,4 @@ const DepartmentList = () => {
   );
 };
 
-export default DepartmentList;
+export default JobLevel;

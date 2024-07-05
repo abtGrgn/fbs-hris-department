@@ -140,8 +140,10 @@ const Navigation = ({ menu, submenu }) => {
                     menu === "employees" ? "bg-white/20 " : ""
                   }`}
                 >
-                    <Link to="/employees" className="navigation-item"><IoIosPeople size={18}/>EMPLOYEES</Link> 
-                  
+                  <Link to="/employees" className="navigation-item">
+                    <IoIosPeople size={18} />
+                    EMPLOYEES
+                  </Link>
                 </li>
                 <li
                   className={`px-5 py-2 flex items-center justify-between text-white ${
@@ -186,24 +188,26 @@ const Navigation = ({ menu, submenu }) => {
                   </div>
                 )}
                 <li
-                  className={`px-5 py-2 flex items-center justify-between  text-white${
-                    menu === "" ? "bg-white/20 " : ""
+                  className={`px-5 py-2 flex items-center justify-between  text-white ${
+                    menu === "client" ? "bg-white/20 " : ""
                   }`}
                   onClick={handleClientOpen}
                 >
                   <div className="navigation-item">
-                    <FaPersonBooth />
-                    CLIENT
+                    <Link to="/client" className="navigation-item">
+                      <FaPersonBooth size={16}/>
+                      CLIENT
+                    </Link>
                   </div>
 
-                  <GoChevronDown
+                  {/* <GoChevronDown
                     size={15}
                     className={`duration-200 ${
                       store.isClientOpen && "-rotate-180 duration-200"
                     }`}
-                  />
+                  /> */}
                 </li>
-                {store.isClientOpen && (
+                {/* {store.isClientOpen && (
                   <div className="submenu ml-8">
                     <ul className="flex flex-col gap-3 my-3 ">
                       <li
@@ -226,7 +230,7 @@ const Navigation = ({ menu, submenu }) => {
                       </li>
                     </ul>
                   </div>
-                )}
+                )} */}
                 <li
                   className={`px-5 py-2 flex items-center justify-between text-white ${
                     menu === "" ? "bg-white/20 " : ""
@@ -276,7 +280,7 @@ const Navigation = ({ menu, submenu }) => {
                   onClick={handleSettingsOpen}
                 >
                   <div className="navigation-item ">
-                    <IoSettingsSharp  />
+                    <IoSettingsSharp />
                     SETTINGS
                   </div>
 

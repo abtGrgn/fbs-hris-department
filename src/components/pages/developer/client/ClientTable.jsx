@@ -1,31 +1,24 @@
 import { queryDataInfinite } from "@/components/helpers/queryDataInfinite";
 import Loadmore from "@/components/partials/LoadMore";
-import NoData from "@/components/partials/NoData";
-import SearchBar from "@/components/partials/SearchBar";
-import ServerError from "@/components/partials/ServerError";
-import Status from "@/components/partials/Status";
-import TableLoader from "@/components/partials/TableLoader";
 import ModalArchive from "@/components/partials/modal/ModalArchive";
 import ModalDelete from "@/components/partials/modal/ModalDelete";
 import ModalRestore from "@/components/partials/modal/ModalRestore";
+import NoData from "@/components/partials/NoData";
+import SearchBar from "@/components/partials/SearchBar";
+import ServerError from "@/components/partials/ServerError";
 import FetchingSpinner from "@/components/partials/spinner/FetchingSpinner";
 import TableSpinner from "@/components/partials/spinner/TableSpinner";
-import {
-  setIsAdd,
-  setIsArchive,
-  setIsDelete,
-  setIsRestore,
-} from "@/store/storeAction";
+import Status from "@/components/partials/Status";
+import TableLoader from "@/components/partials/TableLoader";
+import { setIsAdd, setIsArchive, setIsDelete, setIsRestore } from "@/store/storeAction";
 import { StoreContext } from "@/store/storeContext";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { FaArchive, FaEdit } from "react-icons/fa";
 import { MdDelete, MdRestore } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
-import { Link } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
 
-const EmployeesTable = ({ setEmployeesEdit }) => {
+const ClientTable = ({ setClientEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isArchiving, setIsArchiving] = React.useState(false);
   const [id, setId] = React.useState("");
@@ -48,11 +41,11 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
     isLoading,
     status,
   } = useInfiniteQuery({
-    queryKey: ["employees", onSearch, store.isSearch],
+    queryKey: ["client", onSearch, store.isSearch],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `/v2/employees/search`, // search endpoint
-        `/v2/employees/page/${pageParam}`, // list endpoint
+        `/v2/client/search`, // search endpoint
+        `/v2/client/page/${pageParam}`, // list endpoint
         store.isSearch, // search boolean
         { searchValue: search.current.value, id: "" } // search value
       ),
@@ -67,32 +60,32 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
-    setEmployeesEdit(item);
+    setClientEdit(item);
   };
 
   const handleArchive = (item) => {
-    setIsData(item.employees_fname);
+    setIsData(item.client_name);
     dispatch(setIsArchive(true));
-    setId(item.employees_aid);
+    setId(item.client_aid);
     setIsArchiving(true);
     setIsRestore(false);
   };
 
   const handleRestore = (item) => {
-    setIsData(item.employees_fname);
+    setIsData(item.client_name);
     dispatch(setIsRestore(true));
-    setId(item.employees_aid);
+    setId(item.client_aid);
     setIsArchiving(false);
     setIsRestore(true);
   };
 
   const handleDelete = (item) => {
-    setIsData(item.employees_fname);
+    setIsData(item.client_name);
     dispatch(setIsDelete(true));
-    setId(item.employees_aid);
+    setId(item.client_aid);
   };
 
-  // used for loading of pages without clicking the Load more button (automatic loading)
+  // used for loading of pages without clicking the Load more button
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -122,22 +115,17 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
           {isLoading && !isFetchingNextPage && status !== "pending" && (
             <TableSpinner />
           )}
-          {console.log(status)}
           <thead>
             <tr>
               <th>#</th>
               <th>Status</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Job Title </th>
-              <th>Department</th>
               <th>Client</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {(status === "pending" || result?.pages[0].data.length === 0) && (
-              <tr className="text-center ">
+              <tr className="text-center">
                 <td colSpan="100%" className="p-10">
                   {status === "pending" ? (
                     <TableLoader count={20} cols={3} />
@@ -148,7 +136,7 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
               </tr>
             )}
             {error && (
-              <tr className="text-center ">
+              <tr className="text-center">
                 <td colSpan="100%" className="p-10">
                   <ServerError />
                 </td>
@@ -156,28 +144,19 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
             )}
             {result?.pages.map((page, key) => (
               <React.Fragment key={key}>
-                {page?.data.map((item, key) => (
+                {page.data.map((item, key) => (
                   <tr key={key}>
                     <td>{counter++}</td>
                     <td>
-                      {item.employees_is_active === 1 ? (
+                      {item.client_is_active === 1 ? (
                         <Status text="Active" />
                       ) : (
                         <Status text="Inactive" />
                       )}
                     </td>
-                    <td>{item.employees_fname}</td>
-                    <td>{item.employees_lname}</td>
-                    <td>{item.job_title_name}</td>
-                    <td>{item.department_name}</td>
                     <td>{item.client_name}</td>
-                    <td className="flex gap-2 justify-end">
-                      <button className="tooltip" data-tooltip="Profile">
-                        <Link to={`/employees/profile?empid=${item.employees_aid}`}>
-                          <CgProfile className=" text-gray-500" size={13}/>
-                        </Link>
-                      </button>
-                      {item.employees_is_active ? (
+                    <td className="flex items-center justify-end gap-3">
+                      {item.client_is_active ? (
                         <>
                           <button
                             className="tooltip"
@@ -232,8 +211,8 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
       {store.isArchive && (
         <ModalArchive
           setIsArchive={setIsArchive}
-          queryKey={"employees"}
-          mysqlEndpoint={`/v2/employees/active/${id}`}
+          queryKey={"client"}
+          mysqlEndpoint={`/v2/client/active/${id}`}
           item={isData}
           archive={isArchiving}
         />
@@ -241,16 +220,16 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
       {store.isDelete && (
         <ModalDelete
           setIsDelete={setIsDelete}
-          queryKey={"employees"}
-          mysqlEndpoint={`/v2/employees/${id}`}
+          queryKey={"client"}
+          mysqlEndpoint={`/v2/client/${id}`}
           item={isData}
         />
       )}
       {store.isRestore && (
         <ModalRestore
           setIsRestore={setIsRestore}
-          queryKey={"employees"}
-          mysqlEndpoint={`/v2/employees/active/${id}`}
+          queryKey={"client"}
+          mysqlEndpoint={`/v2/client/active/${id}`}
           item={isData}
         />
       )}
@@ -258,4 +237,4 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
   );
 };
 
-export default EmployeesTable;
+export default ClientTable;
