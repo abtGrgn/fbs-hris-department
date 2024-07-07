@@ -129,24 +129,16 @@ class Profile{
     public function update(){
         try{
             $sql = "update {$this->tblProfile} set ";
-            $sql .= "profile_employee_id = :profile_employee_id, ";
-            $sql .= "profile_fname_id = :profile_fname_id, ";
-            $sql .= "profile_lname_id = :profile_lname_id, ";
-            $sql .= "profile_email = :profile_email, ";
             $sql .= "profile_telephone = :profile_telephone, ";
             $sql .= "profile_address = :profile_address, ";
             $sql .= "profile_datetime = :profile_datetime ";
             $sql .= "where profile_aid = :profile_aid";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "profile_employee_id" => $this->profile_employee_id,
-                "profile_fname_id" => $this->profile_fname_id,
-                "profile_lname_id" => $this->profile_lname_id,
-                "profile_email" => $this->profile_email,
                 "profile_telephone" => $this->profile_telephone,
                 "profile_address" => $this->profile_address,
                 "profile_datetime" => $this->profile_datetime,
-                "profile_aid" => $this->profile_aid,
+                "profile_aid" => $this->profile_aid
             ]); 
         }catch (PDOException $ex) {
             $query = false;

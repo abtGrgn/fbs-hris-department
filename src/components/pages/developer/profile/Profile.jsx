@@ -32,13 +32,11 @@ const Profile = () => {
         </div>
       </div>
       {store.success && <ModalSuccess />}
-      {store.isAdd && (
+      {store.isAdd && 
         <ModalAddProfile
-          setProfileEdit={setProfileEdit}
           profileEdit={profileEdit}
-     
         />
-      )}
+      }
       {store.error && <ModalError />}
     </>
   );

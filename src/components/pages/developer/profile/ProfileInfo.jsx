@@ -18,16 +18,16 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
   };
 
   const {
-    isLoading ,
-    isFetching ,
+    isLoading,
+    isFetching,
     error,
+    status,
     data: profile,
   } = useQueryData(
     `/v2/profile/${id}`, // endpoint
     "get", // method
     "profile" // key
   );
-
 
   return (
     <>
@@ -37,7 +37,7 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
             <h2 className="text-sm font-semibold py-2 !uppercase">Details</h2>
             <button
               className="flex text-[#9f1659] text-sm"
-              onClick={handleEdit}
+              onClick={() => handleEdit(profile.data[0])}
             >
               <FaPencilAlt />
               Edit
@@ -46,51 +46,46 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
         </div>
 
         <table className="mt-3 relative">
-        {/* {isFetching && status !== "loading" && (
-            <FetchingSpinner />
-          )} */}
+          {isFetching && status !== "loading" && <FetchingSpinner />}
           <tbody>
-          {/* {isLoading && status !== "pending" && (
-              <TableSpinner/>
-            )} */}
-            {/* {status === "pending" && (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  {status === "pending" ? (
-                    <TableLoader count={20} cols={3} />
-                  ) : (
-                    <NoData />
-                  )}
-                </td>
-              </tr>
-            )}
+            {isLoading && status !== "pending" && <TableSpinner />}
             {error && (
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
                   <ServerError />
                 </td>
               </tr>
-            )} */}
-            {profile?.data.map((item, key) => (
+            )}
+            {isLoading ? (
+              <TableLoader cols={2} count={8} />
+            ) : profile?.data.length === 0 ? (
+              <NoData />
+            ) : (
               <>
-                <tr key={key}>
-                  <th>Name :</th>
-                  <td>{item.employees_fname} {item.employees_lname}</td>
-                </tr>
-                <tr>
-                  <th>Email :</th>
-                  <td>{item.profile_email}</td>
-                </tr>
-                <tr>
-                  <th>Telephone No. :</th>
-                  <td>{item.profile_telephone}</td>
-                </tr>
-                <tr>
-                  <th>Address :</th>
-                  <td>{item.profile_address}</td>
-                </tr>
+                {profile?.data.map((item, key) => (
+                  <>
+                    <tr key={key}>
+                      <th>Name :</th>
+                      <td>
+                        {item.employees_fname} {item.employees_lname}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Email :</th>
+                      <td>{item.profile_email}</td>
+                    </tr>
+                    <tr>
+                      <th>Telephone No. :</th>
+                      <td>{item.profile_telephone}</td>
+                    </tr>
+                    <tr>
+                      <th>Address :</th>
+                      <td>{item.profile_address}</td>
+                    </tr>
+                  </>
+                ))}
               </>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

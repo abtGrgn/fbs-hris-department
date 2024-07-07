@@ -13,9 +13,6 @@ if (array_key_exists("profileid", $_GET)) {
   checkPayload($data);
   // get data
   $profile->profile_aid = $_GET['profileid'];
-  $profile->profile_fname_id = checkIndex($data, "profile_fname_id");
-  $profile->profile_lname_id = checkIndex($data, "profile_lname_id");
-  $profile->profile_email = checkIndex($data, "profile_email");
   $profile->profile_telephone = checkIndex($data, "profile_telephone");
   $profile->profile_address = checkIndex($data, "profile_address");
  

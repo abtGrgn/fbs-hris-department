@@ -1,4 +1,5 @@
 import { InputText } from "@/components/helpers/FormInputs";
+import { queryData } from "@/components/helpers/queryData";
 import ModalSideWrapper from "@/components/partials/modal/ModalSideWrapper";
 import ButtonSpinner from "@/components/partials/spinner/ButtonSpinner";
 import {
@@ -14,7 +15,7 @@ import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import * as Yup from "yup";
 
-const ModalAddProfile = ({ profileEdit, employees }) => {
+const ModalAddProfile = ({ profileEdit}) => {
   const { store, dispatch } = React.useContext(StoreContext);
   
 
@@ -85,7 +86,7 @@ const ModalAddProfile = ({ profileEdit, employees }) => {
                       <div className="input-wrapper">
                         <InputText
                           label="Telephone No."
-                          type="text"
+                          type="number"
                           name="profile_telephone"
                           disabled={mutation.isPending}
                         />
