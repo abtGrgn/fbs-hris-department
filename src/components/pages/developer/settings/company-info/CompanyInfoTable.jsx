@@ -25,7 +25,7 @@ const CompanyInfoTable = ({ setCompanyEdit, company, isLoading, isFetching, stat
             <h2 className="text-sm font-semibold py-2 !uppercase">details</h2>
             <button
               className="flex text-[#9f1659] text-sm"
-              onClick={() => handleEdit(company.data[0])}
+              onClick={() => handleEdit(company.data[0])} //This refers to the first element of the data array within the company object.
             >
               <FaPencilAlt />
               Update

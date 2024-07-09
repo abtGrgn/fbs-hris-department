@@ -173,7 +173,7 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
                     <td>{item.client_name}</td>
                     <td className="flex gap-2 justify-end">
                       <button className="tooltip" data-tooltip="Profile">
-                        <Link to={`/employees/profile?empid=${item.employees_aid}`}>
+                        <Link to={`/employees/employeesInfo?empid=${item.employees_aid}`}>
                           <CgProfile className=" text-gray-500" size={13}/>
                         </Link>
                       </button>

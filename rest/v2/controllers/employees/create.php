@@ -4,6 +4,7 @@ $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
 $employees = new Employees($conn);
+
 // get should not be present
 
 // check data
@@ -18,10 +19,22 @@ $employees->employees_client_id = checkIndex($data, "employees_client_id");
 $employees->employees_created = date("Y-m-d H:i:s");
 $employees->employees_datetime = date("Y-m-d H:i:s");
 
+// FOR EMPLOYEE INFO TABLE
+$employees->employees_info_telephone = "";
+$employees->employees_info_email = "";
+$employees->employees_info_address = "";
+$employees->employees_info_is_active = 1;
+$employees->employees_info_datetime = date("Y-m-d H:i:s");
+$employees->employees_info_created = date("Y-m-d H:i:s");
+
+
+
 //checks newly added data if it already exists
 isNameExist($employees, $employees->employees_fname);
 isNameExist($employees, $employees->employees_lname);
 
 $query = checkCreate($employees);
+
+checkCreateEmployeeInfo($employees);
 
 returnSuccess($employees, "employees", $query);

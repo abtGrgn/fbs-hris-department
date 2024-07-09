@@ -22,9 +22,9 @@ RewriteRule ^employees/active/([0-9]+)$ controllers/employees/active.php?employe
 RewriteRule ^employees/page/([0-9]+)$ controllers/employees/page.php?start=$1 [L]
 RewriteRule ^employees/search$ controllers/employees/search.php [L]
 
-RewriteRule ^profile$ controllers/profile/profile.php [L]
-RewriteRule ^profile/([0-9]+)$ controllers/profile/profile.php?profileid=$1 [L]
-RewriteRule ^profile/active/([0-9]+)$ controllers/profile/active.php?profileid=$1 [L]
+RewriteRule ^employees_info$ controllers/employees_info/employees_info.php [L]
+RewriteRule ^employees_info/([0-9]+)$ controllers/employees_info/employees_info.php?employees_infoid=$1 [L]
+
 
 RewriteRule ^departments$ controllers/settings/departments/departments.php [L]
 RewriteRule ^departments/([0-9]+)$ controllers/settings/departments/departments.php?departmentsid=$1 [L]

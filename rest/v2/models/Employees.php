@@ -10,6 +10,17 @@ class Employees{
     public $employees_is_active;
     public $employees_created;
     public $employees_datetime;
+    
+
+    public $employees_info_aid;
+    public $employees_info_is_active;
+    public $employees_info_telephone;
+    public $employees_info_email;
+    public $employees_info_employees_id;
+    public $employees_info_address;
+    public $employees_info_datetime;
+    public $employees_info_created;
+
 
     public $connection;
     public $lastInsertedId;
@@ -21,6 +32,7 @@ class Employees{
     public $tblDepartments; //table of departments
     public $tblJobTitle; // table of job title
     public $tblClient; // table of client
+    public $tblEmpInfo; // table of client
 
     public function __construct($db){
         $this->connection = $db;
@@ -28,6 +40,7 @@ class Employees{
         $this->tblDepartments = "fbs_hris_departments";
         $this->tblJobTitle = "fbs_hris_job_title";
         $this->tblClient = "fbs_hris_client";
+        $this->tblEmpInfo = "fbs_hris_employees_info";
     }
 
     public function readAll(){
@@ -57,11 +70,9 @@ class Employees{
             $sql .= "from ";
             $sql .= "{$this->tblEmployees} as emp, ";
             $sql .= "{$this->tblDepartments} as dept, ";
-            $sql .= "{$this->tblJobTitle} as job, ";
-            $sql .= "{$this->tblClient} as client ";
+            $sql .= "{$this->tblJobTitle} as job ";
             $sql .= "where emp.employees_department_id = dept.department_aid ";
             $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
-            $sql .= "and emp.employees_client_id = client.client_aid ";
             $sql .= "order by employees_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
             $sql .= "employees_aid asc ";
             $sql .= "limit :start, ";
@@ -85,15 +96,14 @@ class Employees{
             $sql .= "{$this->tblEmployees} as emp, ";
             $sql .= "{$this->tblDepartments} as dept, ";
             $sql .= "{$this->tblJobTitle} as job, ";
-            $sql .= "{$this->tblClient} as client ";
+            $sql .= "{$this->tblEmpInfo} as info ";
             $sql .= "where emp.employees_department_id = dept.department_aid ";
             $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
-            $sql .= "and emp.employees_client_id = client.client_aid ";
+            $sql .= "and emp.employees_aid = info.employees_info_employees_id ";
+            $sql .= "and emp.employees_aid = :employees_aid ";
         $query = $this->connection->prepare($sql);
         $query->execute([
-          "employees_department_id" => $this->employees_department_id,
-          "job_title_aid" => $this->job_title_aid,
-          "job_client_id" => $this->job_client_id,
+          "employees_aid" => $this->employees_aid,
         ]);
       } catch (PDOException $ex) {
         $query = false;
@@ -134,7 +144,6 @@ class Employees{
             $sql .= "employees_lname, ";
             $sql .= "employees_job_title_id, ";
             $sql .= "employees_department_id, ";
-            $sql .= "employees_client_id, ";
             $sql .= "employees_created, ";
             $sql .= "employees_datetime ) values ( ";
             $sql .= ":employees_is_active, ";
@@ -142,7 +151,6 @@ class Employees{
             $sql .= ":employees_lname, ";
             $sql .= ":employees_job_title_id, ";
             $sql .= ":employees_department_id, ";
-            $sql .= ":employees_client_id, ";
             $sql .= ":employees_created, ";
             $sql .= ":employees_datetime )";
             $query = $this->connection->prepare($sql);
@@ -152,7 +160,6 @@ class Employees{
                 "employees_lname"=> $this->employees_lname,
                 "employees_job_title_id"=> $this->employees_job_title_id,
                 "employees_department_id"=> $this->employees_department_id,
-                "employees_client_id"=> $this->employees_client_id,
                 "employees_created"=> $this->employees_created,
                 "employees_datetime"=> $this->employees_datetime,
             ]);
@@ -239,6 +246,38 @@ class Employees{
   }
 
   
+  public function createEmployeeInfo() {
+    try{
+        $sql = "insert into {$this->tblEmpInfo} ";
+        $sql .= "(employees_info_is_active, ";
+        $sql .= "employees_info_telephone, ";
+        $sql .= "employees_info_employees_id, ";
+        $sql .= "employees_info_email, ";
+        $sql .= "employees_info_address, ";
+        $sql .= "employees_info_datetime, ";
+        $sql .= "employees_info_created ) values ( ";
+        $sql .= ":employees_info_is_active, ";
+        $sql .= ":employees_info_telephone, ";
+        $sql .= ":employees_info_employees_id, ";
+        $sql .= ":employees_info_email, ";
+        $sql .= ":employees_info_address, ";
+        $sql .= ":employees_info_datetime, ";
+        $sql .= ":employees_info_created )";
+        $query = $this->connection->prepare($sql);
+        $query->execute([
+            "employees_info_is_active" => $this->employees_info_is_active,
+            "employees_info_telephone" => $this->employees_info_telephone,
+            "employees_info_employees_id" => $this->lastInsertedId,
+            "employees_info_email" => $this->employees_info_email,
+            "employees_info_address" => $this->employees_info_address,
+            "employees_info_datetime" => $this->employees_info_datetime,
+            "employees_info_created" => $this->employees_info_created,
+        ]);
+    }catch (PDOException $ex) {
+        $query = false;
+    }
+    return $query;
+  }
 
 
 }

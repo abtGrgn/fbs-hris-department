@@ -111,3 +111,38 @@ export const InputArea = ({
     </>
   );
 };
+export const InputTextArea = ({
+  label,
+  onChange = null,
+  className = "text-[12px] outline-none  focus:border-[#9f1659] ",
+  ...props
+}) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <>
+      <label
+        htmlFor={props.id || props.name}
+        className={meta.touched && meta.error ? "error-msg" : ""}
+      >
+        {label}
+      </label>
+      <textarea
+        className={
+          meta.touched && meta.error ? `error-msg ${className}` : className
+        }
+        {...field}
+        {...props}
+        autoComplete="off"
+        onChange={(e) => {
+          onChange !== null && onChange(e);
+          field.onChange(e);
+        }}
+      ></textarea>
+      {meta.touched && meta.error ? (
+        <small className="error-show">{meta.error}</small>
+      ) : null}
+    </>
+  );
+};    
+

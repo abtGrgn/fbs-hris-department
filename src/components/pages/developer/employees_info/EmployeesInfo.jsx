@@ -1,19 +1,19 @@
 import Header from "@/components/partials/Header";
 import Navigation from "@/components/partials/Navigation";
 import React from "react";
-import ProfileInfo from "./ProfileInfo";
-import ModalAddProfile from "./ModalAddProfile";
 import Footer from "@/components/partials/Footer";
 import { StoreContext } from "@/store/storeContext";
 import ModalSuccess from "@/components/partials/modal/ModalSuccess";
 import ModalError from "@/components/partials/modal/ModalError";
 import useQueryData from "@/components/custom-hooks/useQueryData";
 import { getUrlParam } from "@/components/helpers/functions-general";
+import EmployeesInfoTable from "./EmployeesInfoTable";
+import ModalAddEmployeesInfo from "./ModalAddEmployeesInfo";
 
-const Profile = () => {
+const EmployeesInfo = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [profileEdit, setProfileEdit] = React.useState(null);
-  const id = getUrlParam().get('empid')  
+  const [employeesInfoEdit, setEmployeesInfoEdit] = React.useState(null);
+  const id = getUrlParam().get('empid')  // used to extract a query parameter named "empid" from the URL and assign its value to a constant named "id".
 
 
   return (
@@ -26,15 +26,15 @@ const Profile = () => {
             <div className="list-content">
               <h2>Profile</h2>
             </div>
-            <ProfileInfo setProfileEdit={setProfileEdit} id= {id} />
+            <EmployeesInfoTable setEmployeesInfoEdit={setEmployeesInfoEdit} id= {id} />
           </div>
           <Footer />
         </div>
       </div>
       {store.success && <ModalSuccess />}
       {store.isAdd && 
-        <ModalAddProfile
-          profileEdit={profileEdit}
+        <ModalAddEmployeesInfo
+        employeesInfoEdit={employeesInfoEdit}
         />
       }
       {store.error && <ModalError />}
@@ -42,4 +42,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default EmployeesInfo;

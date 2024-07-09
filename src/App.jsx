@@ -18,7 +18,7 @@ import CompanyInfo from "./components/pages/developer/settings/company-info/Comp
 import Department from "./components/pages/developer/settings/departments/Department";
 import JobLevel from "./components/pages/developer/settings/job/level/JobLevel";
 import JobTitle from "./components/pages/developer/settings/job/title/JobTitle";
-import Profile from "./components/pages/developer/profile/Profile";
+import EmployeesInfo from "./components/pages/developer/employees_info/EmployeesInfo";
 
 function App() {
   const queryClient = new QueryClient();
@@ -52,7 +52,7 @@ function App() {
               <Route path={`/table-freeze`} element={<TableFreezeList />} />
               <Route path={`/table-freezev2`} element={<TableFreezeV2List />} />
 
-              <Route path={`/employees/profile`} element={<Profile/>}/>
+              <Route path={`/employees/employeesInfo`} element={<EmployeesInfo/>}/>
             </Routes>
           </Router>
         </StoreProvider>

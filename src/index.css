@@ -311,7 +311,9 @@
   select option{
     @apply text-black
   }
-
+textarea{
+  @apply border border-solid border-gray-300 p-2 pt-3 rounded-lg h-[80px] truncate relative text-xs focus:border-[#9f1659] w-full
+}
   
   /* textarea {
     @apply block w-full p-2 border border-gray-300 border-solid rounded-lg resize-none h-28;

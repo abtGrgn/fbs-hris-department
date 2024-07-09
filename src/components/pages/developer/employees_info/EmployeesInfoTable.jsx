@@ -9,12 +9,12 @@ import { StoreContext } from "@/store/storeContext";
 import React from "react";
 import { FaPencilAlt } from "react-icons/fa";
 
-const ProfileInfo = ({ setProfileEdit, id }) => {
+const EmployeesInfoTable = ({ setEmployeesInfoEdit, id }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
-    setProfileEdit(item);
+    setEmployeesInfoEdit(item);
   };
 
   const {
@@ -22,11 +22,11 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
     isFetching,
     error,
     status,
-    data: profile,
+    data: employees,
   } = useQueryData(
-    `/v2/profile/${id}`, // endpoint
+    `/v2/employees/${id}`, // endpoint
     "get", // method
-    "profile" // key
+    "employees" // key
   );
 
   return (
@@ -37,16 +37,16 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
             <h2 className="text-sm font-semibold py-2 !uppercase">Details</h2>
             <button
               className="flex text-[#9f1659] text-sm"
-              onClick={() => handleEdit(profile.data[0])}
+              onClick={() => handleEdit(employees.data[0])} //This refers to the first element of the data array within the employees_info object.
             >
               <FaPencilAlt />
               Edit
             </button>
           </div>
         </div>
-
+  {isFetching && status !== "loading" && <FetchingSpinner />}
         <table className="mt-3 relative">
-          {isFetching && status !== "loading" && <FetchingSpinner />}
+          
           <tbody>
             {isLoading && status !== "pending" && <TableSpinner />}
             {error && (
@@ -56,13 +56,23 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
                 </td>
               </tr>
             )}
+            
             {isLoading ? (
-              <TableLoader cols={2} count={8} />
-            ) : profile?.data.length === 0 ? (
-              <NoData />
+              <tr>
+                <td>
+                <TableLoader cols={2} count={8} />
+                </td>
+              </tr> 
+            ) : employees?.data.length === 0 ? (
+              <tr>
+                <td>
+                <NoData />
+                </td>
+              </tr>
+              
             ) : (
               <>
-                {profile?.data.map((item, key) => (
+                {employees?.data.map((item, key) => (
                   <>
                     <tr key={key}>
                       <th>Name :</th>
@@ -72,15 +82,15 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
                     </tr>
                     <tr>
                       <th>Email :</th>
-                      <td>{item.profile_email}</td>
+                      <td>{item.employees_info_email}</td>
                     </tr>
                     <tr>
                       <th>Telephone No. :</th>
-                      <td>{item.profile_telephone}</td>
+                      <td>{item.employees_info_telephone}</td>
                     </tr>
                     <tr>
                       <th>Address :</th>
-                      <td>{item.profile_address}</td>
+                      <td>{item.employees_info_address}</td>
                     </tr>
                   </>
                 ))}
@@ -93,4 +103,4 @@ const ProfileInfo = ({ setProfileEdit, id }) => {
   );
 };
 
-export default ProfileInfo;
+export default EmployeesInfoTable;
