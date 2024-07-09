@@ -1,6 +1,7 @@
 <?php
 
-class Employees{
+class Employees
+{
     public $employees_aid;
     public $employees_fname;
     public $employees_lname;
@@ -10,7 +11,7 @@ class Employees{
     public $employees_is_active;
     public $employees_created;
     public $employees_datetime;
-    
+
 
     public $employees_info_aid;
     public $employees_info_is_active;
@@ -33,27 +34,44 @@ class Employees{
     public $tblJobTitle; // table of job title
     public $tblClient; // table of client
     public $tblEmpInfo; // table of client
+    public $tblJobLevel; // table of client
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->connection = $db;
         $this->tblEmployees = "fbs_hris_employees";
         $this->tblDepartments = "fbs_hris_departments";
         $this->tblJobTitle = "fbs_hris_job_title";
         $this->tblClient = "fbs_hris_client";
         $this->tblEmpInfo = "fbs_hris_employees_info";
+        $this->tblJobLevel = "fbs_hris_job_level";
     }
 
-    public function readAll(){
-        try{
+    public function readAllJobDescription()
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblJobTitle} as title, ";
+            $sql .= "{$this->tblJobLevel} as level ";
+            $sql .= "where title.job_title_job_level_id = level.job_level_aid ";
+            $sql .= "order by job_title_is_active desc, ";
+            $sql .= "job_title_aid asc ";
+            $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readAllDepartment()
+    {
+        try {
             $sql = "select * ";
             $sql .= "from ";
             $sql .= "{$this->tblEmployees} as emp, ";
-            $sql .= "{$this->tblDepartments} as dept, ";
-            $sql .= "{$this->tblJobTitle} as job, ";
-            $sql .= "{$this->tblClient} as client ";
-            $sql .= "where emp.employees_department_id = dept.department_aid ";
-            $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
-            $sql .= "and emp.employees_client_id = client.client_aid ";
+            $sql .= "{$this->tblDepartments} as dept ";
+            $sql .= "where emp.employees_department_id = dept.department_aid  ";
             $sql .= "order by employees_is_active desc, ";
             $sql .= "employees_aid asc ";
             $query = $this->connection->query($sql);
@@ -63,7 +81,7 @@ class Employees{
         return $query;
     }
 
-    public function readLimit() 
+    public function readAll()
     {
         try {
             $sql = "select * ";
@@ -73,6 +91,25 @@ class Employees{
             $sql .= "{$this->tblJobTitle} as job ";
             $sql .= "where emp.employees_department_id = dept.department_aid ";
             $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
+            $sql .= "order by employees_is_active desc, ";
+            $sql .= "employees_aid asc ";
+            $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readLimit() //used for strict reading of data (dapat matchy matchy)
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from ";
+            $sql .= "{$this->tblEmployees} as emp ";
+            // $sql .= "{$this->tblDepartments} as dept, ";
+            // $sql .= "{$this->tblJobTitle} as job ";
+            // $sql .= "where emp.employees_department_id = dept.department_aid ";
+            // $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
             $sql .= "order by employees_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
             $sql .= "employees_aid asc ";
             $sql .= "limit :start, ";
@@ -90,8 +127,8 @@ class Employees{
 
     public function readById()
     {
-      try {
-        $sql = "select * ";
+        try {
+            $sql = "select * ";
             $sql .= "from ";
             $sql .= "{$this->tblEmployees} as emp, ";
             $sql .= "{$this->tblDepartments} as dept, ";
@@ -101,14 +138,14 @@ class Employees{
             $sql .= "and emp.employees_job_title_id = job.job_title_aid ";
             $sql .= "and emp.employees_aid = info.employees_info_employees_id ";
             $sql .= "and emp.employees_aid = :employees_aid ";
-        $query = $this->connection->prepare($sql);
-        $query->execute([
-          "employees_aid" => $this->employees_aid,
-        ]);
-      } catch (PDOException $ex) {
-        $query = false;
-      }
-      return $query;
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "employees_aid" => $this->employees_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
     }
 
     public function search()
@@ -136,8 +173,9 @@ class Employees{
         return $query;
     }
 
-    public function create() {
-        try{
+    public function create()
+    {
+        try {
             $sql = "insert into {$this->tblEmployees}";
             $sql .= "(employees_is_active, ";
             $sql .= "employees_fname, ";
@@ -155,23 +193,24 @@ class Employees{
             $sql .= ":employees_datetime )";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "employees_is_active"=> $this->employees_is_active,
-                "employees_fname"=> $this->employees_fname,
-                "employees_lname"=> $this->employees_lname,
-                "employees_job_title_id"=> $this->employees_job_title_id,
-                "employees_department_id"=> $this->employees_department_id,
-                "employees_created"=> $this->employees_created,
-                "employees_datetime"=> $this->employees_datetime,
+                "employees_is_active" => $this->employees_is_active,
+                "employees_fname" => $this->employees_fname,
+                "employees_lname" => $this->employees_lname,
+                "employees_job_title_id" => $this->employees_job_title_id,
+                "employees_department_id" => $this->employees_department_id,
+                "employees_created" => $this->employees_created,
+                "employees_datetime" => $this->employees_datetime,
             ]);
             $this->lastInsertedId = $this->connection->lastInsertId();
-        }catch (PDOException $ex) {
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
-    public function update(){
-        try{
+    public function update()
+    {
+        try {
             $sql = "update {$this->tblEmployees} set ";
             $sql .= "employees_fname = :employees_fname, ";
             $sql .= "employees_lname = :employees_lname, ";
@@ -189,29 +228,31 @@ class Employees{
                 "employees_client_id" => $this->employees_client_id,
                 "employees_datetime" => $this->employees_datetime,
                 "employees_aid" => $this->employees_aid,
-            ]); 
-        }catch (PDOException $ex) {
+            ]);
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
-    public function delete() {
-        try{
+    public function delete()
+    {
+        try {
             $sql = "delete from {$this->tblEmployees} ";
             $sql .= "where employees_aid = :employees_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "employees_aid" => $this->employees_aid,
             ]);
-        }catch (PDOException $ex) {
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
-    public function active() {
-        try{
+    public function active()
+    {
+        try {
             $sql = "update {$this->tblEmployees} set ";
             $sql .= "employees_is_active = :employees_is_active, ";
             $sql .= "employees_datetime = :employees_datetime ";
@@ -222,62 +263,61 @@ class Employees{
                 "employees_datetime" => $this->employees_datetime,
                 "employees_aid" => $this->employees_aid,
             ]);
-        }catch (PDOException $ex) {
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
     public function checkName()
-  {
-    try {
-      $sql = "select employees_fname, employees_lname from {$this->tblEmployees} ";
-      $sql .= "where employees_fname = :employees_fname ";
-      $sql .= "and employees_lname = :employees_lname ";
-      $query = $this->connection->prepare($sql);
-      $query->execute([
-        "employees_fname" => "{$this->employees_fname}",
-        "employees_lname" => "{$this->employees_lname}",
-      ]);
-    } catch (PDOException $ex) {
-      $query = false;
+    {
+        try {
+            $sql = "select employees_fname, employees_lname from {$this->tblEmployees} ";
+            $sql .= "where employees_fname = :employees_fname ";
+            $sql .= "and employees_lname = :employees_lname ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "employees_fname" => "{$this->employees_fname}",
+                "employees_lname" => "{$this->employees_lname}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
     }
-    return $query;
-  }
 
-  
-  public function createEmployeeInfo() {
-    try{
-        $sql = "insert into {$this->tblEmpInfo} ";
-        $sql .= "(employees_info_is_active, ";
-        $sql .= "employees_info_telephone, ";
-        $sql .= "employees_info_employees_id, ";
-        $sql .= "employees_info_email, ";
-        $sql .= "employees_info_address, ";
-        $sql .= "employees_info_datetime, ";
-        $sql .= "employees_info_created ) values ( ";
-        $sql .= ":employees_info_is_active, ";
-        $sql .= ":employees_info_telephone, ";
-        $sql .= ":employees_info_employees_id, ";
-        $sql .= ":employees_info_email, ";
-        $sql .= ":employees_info_address, ";
-        $sql .= ":employees_info_datetime, ";
-        $sql .= ":employees_info_created )";
-        $query = $this->connection->prepare($sql);
-        $query->execute([
-            "employees_info_is_active" => $this->employees_info_is_active,
-            "employees_info_telephone" => $this->employees_info_telephone,
-            "employees_info_employees_id" => $this->lastInsertedId,
-            "employees_info_email" => $this->employees_info_email,
-            "employees_info_address" => $this->employees_info_address,
-            "employees_info_datetime" => $this->employees_info_datetime,
-            "employees_info_created" => $this->employees_info_created,
-        ]);
-    }catch (PDOException $ex) {
-        $query = false;
+
+    public function createEmployeeInfo()
+    {
+        try {
+            $sql = "insert into {$this->tblEmpInfo} ";
+            $sql .= "(employees_info_is_active, ";
+            $sql .= "employees_info_telephone, ";
+            $sql .= "employees_info_employees_id, ";
+            $sql .= "employees_info_email, ";
+            $sql .= "employees_info_address, ";
+            $sql .= "employees_info_datetime, ";
+            $sql .= "employees_info_created ) values ( ";
+            $sql .= ":employees_info_is_active, ";
+            $sql .= ":employees_info_telephone, ";
+            $sql .= ":employees_info_employees_id, ";
+            $sql .= ":employees_info_email, ";
+            $sql .= ":employees_info_address, ";
+            $sql .= ":employees_info_datetime, ";
+            $sql .= ":employees_info_created )";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "employees_info_is_active" => $this->employees_info_is_active,
+                "employees_info_telephone" => $this->employees_info_telephone,
+                "employees_info_employees_id" => $this->lastInsertedId,
+                "employees_info_email" => $this->employees_info_email,
+                "employees_info_address" => $this->employees_info_address,
+                "employees_info_datetime" => $this->employees_info_datetime,
+                "employees_info_created" => $this->employees_info_created,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
     }
-    return $query;
-  }
-
-
 }

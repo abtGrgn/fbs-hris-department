@@ -19,7 +19,7 @@ const JobList = () => {
 
   return (
     <>
-        <Header avatar="AG"/>
+        <Header avatar="LR"/>
         <div className="flex">
             <Navigation menu="settings" submenu="job"/>
             <div className="px-4 py-1 ml-7 pb-0 w-full h-[calc(100vh-60px)] flex flex-col justify-between">

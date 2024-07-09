@@ -42,6 +42,9 @@ const Employees = () => {
     "jobtitle" // key
   );
 
+  // const getJobTitleIsActive = jobtitle?.count > 0 && jobtitle.data.filter((item) => item.job_title_is_active === 1);
+  // console.log(getJobTitleIsActive);
+
   const {
     isLoading:clientIsLoading,
     isFetching:clientIsFetching,
@@ -69,7 +72,7 @@ const Employees = () => {
                 Add
               </button>
             </div>
-            <EmployeesTable setEmployeesEdit={setEmployeesEdit}  />
+            <EmployeesTable setEmployeesEdit={setEmployeesEdit} jobtitle={jobtitle} departments={departments} />
           </div>
           <Footer />
         </div>

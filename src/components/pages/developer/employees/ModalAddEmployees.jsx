@@ -89,9 +89,9 @@ const ModalAddEmployees = ({
   const yupSchema = Yup.object({
     employees_fname: Yup.string().required("Required"),
     employees_lname: Yup.string().required("Required"),
-    employees_job_title_id: Yup.string().required("Required"),
-    employees_department_id: Yup.string().required("Required"),
-    employees_client_id: Yup.string().required("Required"),
+    // employees_job_title_id: Yup.string().required("Required"),
+    // employees_department_id: Yup.string().required("Required"),
+    // employees_client_id: Yup.string().required("Required"),
   });
 
   return (

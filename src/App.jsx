@@ -19,6 +19,9 @@ import Department from "./components/pages/developer/settings/departments/Depart
 import JobLevel from "./components/pages/developer/settings/job/level/JobLevel";
 import JobTitle from "./components/pages/developer/settings/job/title/JobTitle";
 import EmployeesInfo from "./components/pages/developer/employees_info/EmployeesInfo";
+import Leave from "./components/pages/developer/leave/Leave";
+import LeaveType from "./components/pages/developer/leave/leaveType/LeaveType";
+import LeaveBenefits from "./components/pages/developer/leave/leaveBenefits/LeaveBenefits";
 
 function App() {
   const queryClient = new QueryClient();
@@ -45,6 +48,10 @@ function App() {
               <Route path={`/settings/job/level`} element={<JobLevel />} />
               <Route path={`/settings/job/title`} element={<JobTitle />} />
            
+              <Route path={`/settings/leave`} element={<Leave/>}/>
+              <Route path={`/settings/leave/leave-type`} element={<LeaveType/>}/>
+              <Route path={`/settings/leave/leave-benefits`} element={<LeaveBenefits/>}/>
+
               <Route path={`/settings/departments`} element={<Department/>}/>
               <Route path={`/settings/company-info`} element={<CompanyInfo />}/>
               <Route path={`/settings/services`} element={<ServicesList />} />

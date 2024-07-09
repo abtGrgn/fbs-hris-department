@@ -24,8 +24,10 @@ import { MdDelete, MdRestore } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { getDepartmentName, getEmployeeJobTitle } from "./function-employees";
 
-const EmployeesTable = ({ setEmployeesEdit }) => {
+
+const EmployeesTable = ({ setEmployeesEdit, jobtitle, departments }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isArchiving, setIsArchiving] = React.useState(false);
   const [id, setId] = React.useState("");
@@ -168,8 +170,8 @@ const EmployeesTable = ({ setEmployeesEdit }) => {
                     </td>
                     <td>{item.employees_fname}</td>
                     <td>{item.employees_lname}</td>
-                    <td>{item.job_title_name}</td>
-                    <td>{item.department_name}</td>
+                    <td>{getEmployeeJobTitle(item.employees_job_title_id, jobtitle)}</td>
+                    <td>{getDepartmentName(item.employees_department_id, departments)}</td>
                     <td>{item.client_name}</td>
                     <td className="flex gap-2 justify-end">
                       <button className="tooltip" data-tooltip="Profile">
