@@ -41,7 +41,7 @@ const BreadCrumbs = ({ param = "" }) => {
                 ? ""
                 : `${devNavUrl}${link}${currentLink}${param}`
             }
-            className="mr-2 font-medium hover:text-accent capitalize text-[12px]"
+            className="mr-2 font-medium hover:text-accent capitalize text-[10px]"
           >
             {crumb.replaceAll("-", " ")}
           </Link>

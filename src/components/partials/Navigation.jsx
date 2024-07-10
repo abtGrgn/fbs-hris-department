@@ -332,7 +332,7 @@ const Navigation = ({ menu, submenu }) => {
                       </li>
                       <li
                         className={`${
-                          submenu === "position"
+                          submenu === "leave"
                             ? "border-l-2 border-[#ffa700] text-[#ffa700]"
                             : "border-transparent text-white"
                         }`}
@@ -341,7 +341,7 @@ const Navigation = ({ menu, submenu }) => {
                       </li>
                       <li
                         className={`${
-                          submenu === "services"
+                          submenu === "notification"
                             ? "border-l-2 border-[#ffa700] text-[#ffa700]"
                             : "border-transparent text-white"
                         }`}

@@ -15,7 +15,7 @@ import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import * as Yup from "yup";
 
-const ModalAddLevel = ({ joblevelEdit }) => {
+const ModalAddLeaveType = ({ leaveTypeEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const handleClose = () => {
@@ -27,14 +27,14 @@ const ModalAddLevel = ({ joblevelEdit }) => {
   const mutation = useMutation({
     mutationFn: (values) =>
       queryData(
-        joblevelEdit
-          ? `/v2/joblevel/${joblevelEdit.job_level_aid}`
-          : `/v2/joblevel`,
-        joblevelEdit ? "put" : "post",
+        leaveTypeEdit
+          ? `/v2/leavetype/${leaveTypeEdit.leave_type_aid}`
+          : `/v2/leavetype`,
+        leaveTypeEdit ? "put" : "post",
         values
       ),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["joblevel"] });
+      queryClient.invalidateQueries({ queryKey: ["leavetype"] });
       if (!data.success) {
         dispatch(setError(true));
         dispatch(setMessage(data.error));
@@ -44,20 +44,21 @@ const ModalAddLevel = ({ joblevelEdit }) => {
         dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(
-          setMessage(`Successfully ${joblevelEdit ? "Updated" : "Added"}.`)
+          setMessage(`Successfully ${leaveTypeEdit ? "Updated" : "Added"}.`)
         );
       }
     },
   });
 
   const initVal = {
-    job_level_aid: joblevelEdit ? joblevelEdit.job_level_aid : "",
-    job_level_level: joblevelEdit ? joblevelEdit.job_level_level : "",
+    leave_type_aid: leaveTypeEdit ? leaveTypeEdit.leave_type_aid : "",
+    leave_type_name: leaveTypeEdit ? leaveTypeEdit.leave_type_name : "",
 
-    job_level_level_old: joblevelEdit ? joblevelEdit.job_level_level : "",
+    leave_type_name_old: leaveTypeEdit ? leaveTypeEdit.leave_type_name : "",
   };
+
   const yupSchema = Yup.object({
-    job_level_level: Yup.string().required("Required"),
+    leave_type_name: Yup.string().required("Required"),
   });
 
   return (
@@ -65,7 +66,7 @@ const ModalAddLevel = ({ joblevelEdit }) => {
       <ModalSideWrapper>
         <div className="modal">
           <div className="modal-title">
-            <h2>{joblevelEdit ? "Edit" : "Add"} Job Level</h2>
+            <h2>{leaveTypeEdit ? "Edit" : "Add"} Leave Type</h2>
             <button onClick={handleClose}>
               <GrFormClose size={25} />
             </button>
@@ -84,10 +85,10 @@ const ModalAddLevel = ({ joblevelEdit }) => {
                 return (
                   <Form className="modal-form">
                     <div className="form-input">
-                      <div className="input-wrapper mt-4">
+                      <div className="input-wrapper">
                         <InputText
-                          label="*Job Level Name"
-                          name="job_level_level"
+                          label="*Type Name"
+                          name="leave_type_name"
                           disabled={mutation.isPending}
                         />
                       </div>
@@ -121,4 +122,4 @@ const ModalAddLevel = ({ joblevelEdit }) => {
   );
 };
 
-export default ModalAddLevel;
+export default ModalAddLeaveType;

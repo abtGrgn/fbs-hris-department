@@ -43,6 +43,18 @@ RewriteRule ^company$ controllers/settings/company/company.php [L]
 RewriteRule ^company/([0-9]+)$ controllers/settings/company/company.php?companyid=$1 [L]
 RewriteRule ^company/active/([0-9]+)$ controllers/settings/company/active.php?companyid=$1 [L]
 
+RewriteRule ^leavetype$ controllers/settings/leave/leavetype/leavetype.php [L]
+RewriteRule ^leavetype/([0-9]+)$ controllers/settings/leave/leavetype/leavetype.php?leavetypeid=$1 [L]
+RewriteRule ^leavetype/active/([0-9]+)$ controllers/settings/leave/leavetype/active.php?leavetypeid=$1 [L]
+RewriteRule ^leavetype/page/([0-9]+)$ controllers/settings/leave/leavetype/page.php?start=$1 [L]
+RewriteRule ^leavetype/search$ controllers/settings/leave/leavetype/search.php [L]
+
+RewriteRule ^leaveBenefits$ controllers/settings/leave/leaveBenefits/leaveBenefits.php [L]
+RewriteRule ^leaveBenefits/([0-9]+)$ controllers/settings/leave/leaveBenefits/leaveBenefits.php?leavebenefitsid=$1 [L]
+RewriteRule ^leaveBenefits/active/([0-9]+)$ controllers/settings/leave/leaveBenefits/active.php?leavebenefitsid=$1 [L]
+RewriteRule ^leaveBenefits/page/([0-9]+)$ controllers/settings/leave/leaveBenefits/page.php?start=$1 [L]
+RewriteRule ^leaveBenefits/search$ controllers/settings/leave/leaveBenefits/search.php [L]
+
 RewriteRule ^joblevel$ controllers/settings/job/joblevel/joblevel.php [L]
 RewriteRule ^joblevel/([0-9]+)$ controllers/settings/job/joblevel/joblevel.php?joblevelid=$1 [L]
 RewriteRule ^joblevel/active/([0-9]+)$ controllers/settings/job/joblevel/active.php?joblevelid=$1 [L]

@@ -12,6 +12,9 @@
   body {
     font-family: Poppins-Regular, serif;
   }
+  h2 {
+    @apply text-[16px] font-bold
+  }
   nav ul li:hover {
     @apply cursor-pointer;
   }
@@ -32,7 +35,7 @@
     @apply p-2 text-[12px];
   }
   .list-content {
-    @apply flex justify-between items-center mb-10 pr-2;
+    @apply flex justify-between items-center mb-3 pr-2;
   }
   .list-content h2 {
     @apply text-lg font-bold;
@@ -135,7 +138,7 @@
     @apply w-[9rem];
   }
   header .avatar {
-    @apply px-3 py-[7.6px] bg-[#9f1659] border-2 rounded-full grid 
+    @apply p-2 py-[4px] bg-[#9f1659] border-2 rounded-full grid 
       place-content-center text-white hover:cursor-pointer
       hover:border-pink-600;
   }
@@ -163,16 +166,16 @@
 
   .avatar-actions p,
   button {
-    @apply flex text-xs items-center gap-2 py-2;
+    @apply flex text-xs items-center gap-2;
   }
   .search {
     @apply flex items-center w-[20rem] relative;
   }
   .search-icon {
-    @apply bg-[#9f1659] text-white text-[16px] absolute right-0 h-full rounded-tr-md rounded-br-md flex items-center px-1;
+    @apply text-gray-400 text-[16px] absolute left-0 h-full rounded-tr-md rounded-br-md flex items-center px-1;
   }
   .search input {
-    @apply h-[2rem] border-[1px] border-gray-300 text-xs pr-7;
+    @apply h-[2rem] border-[1px] border-gray-300 text-xs pl-6;
   }
   .search input:focus {
     @apply outline-none border-[#9f1659];
@@ -236,7 +239,7 @@
     @apply mb-10;
   }
   label {
-    @apply block text-xs text-[#9f1659] absolute -translate-y-[11px] left-2 p-1 bg-white z-10;
+    @apply block text-xs text-[#9f1659] absolute -translate-y-[8px] left-2 px-1 !py-0 bg-white z-10;
   }
   label.error-show {
     @apply text-red-400;
@@ -296,17 +299,16 @@
     @apply inline-block px-5 py-2 rounded-sm w-full text-xs bg-gray-200 text-gray-900;
   }
   .btn-add {
-    @apply text-[16px] flex items-center gap-1 text-[#9f1659] rounded-md;
+    @apply text-[14px] flex items-center gap-1 text-[#9f1659] rounded-md;
   }
   button:disabled {
     @apply opacity-30;
   }
-  input,
-  select {
+  input {
     @apply border border-solid border-gray-300 p-2 rounded-lg w-full h-[40px] truncate relative text-xs focus:border-[#9f1659];
   }
   select {
-    @apply text-gray-400
+    @apply  border border-solid border-gray-300 p-2 rounded-lg w-full text-gray-400 h-[32px] truncate relative text-xs focus:border-[#9f1659]
   }
   select option{
     @apply text-black

@@ -6,7 +6,7 @@ const FetchingSpinner = () => {
       <div className="absolute top-0 right-0 bottom-0 left-0 justify-center flex items-center flex-col text-center bg-white/50 z-40">
         <svg
           aria-hidden="true"
-          className="w-8 h-8 text-gray-700 animate-spin dark:text-gray-300 fill-primary"
+          className="w-6 h-6 text-gray-700 animate-spin dark:text-gray-400 fill-primary"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ const FetchingSpinner = () => {
             fill="currentFill"
           />
         </svg>
-        <span className="mt-1 text-gray-400">Loading...</span>
+        <span className="mt-1 text-[12px] text-gray-400">Loading...</span>
       </div>
     </>
   );

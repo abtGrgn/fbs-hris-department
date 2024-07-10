@@ -1,6 +1,7 @@
 <?php
 
-class Departments{
+class Departments
+{
     public $department_aid;
     public $department_name;
     public $department_is_active;
@@ -12,16 +13,18 @@ class Departments{
     public $department_start;
     public $department_total;
     public $department_search;
-    
+
     public $tblDepartments;
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->connection = $db;
         $this->tblDepartments = "fbs_hris_departments";
     }
 
-    public function readAll(){
-        try{
+    public function readAll()
+    {
+        try {
             $sql = "select * from {$this->tblDepartments} ";
             $sql .= "order by department_is_active desc, ";
             $sql .= "department_aid asc ";
@@ -32,7 +35,7 @@ class Departments{
         return $query;
     }
 
-    public function readLimit() 
+    public function readLimit()
     {
         try {
             $sql = "select * ";
@@ -63,7 +66,7 @@ class Departments{
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "department_name" => "%{$this->department_search}%",
-                
+
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -71,8 +74,9 @@ class Departments{
         return $query;
     }
 
-    public function create() {
-        try{
+    public function create()
+    {
+        try {
             $sql = "insert into {$this->tblDepartments}";
             $sql .= "(department_is_active, ";
             $sql .= "department_name, ";
@@ -84,20 +88,21 @@ class Departments{
             $sql .= ":department_datetime )";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "department_is_active"=> $this->department_is_active,
-                "department_name"=> $this->department_name,
-                "department_created"=> $this->department_created,
-                "department_datetime"=> $this->department_datetime,
+                "department_is_active" => $this->department_is_active,
+                "department_name" => $this->department_name,
+                "department_created" => $this->department_created,
+                "department_datetime" => $this->department_datetime,
             ]);
             $this->lastInsertedId = $this->connection->lastInsertId();
-        }catch (PDOException $ex) {
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
-    public function update(){
-        try{
+    public function update()
+    {
+        try {
             $sql = "update {$this->tblDepartments} set ";
             $sql .= "department_name = :department_name, ";
             $sql .= "department_datetime = :department_datetime ";
@@ -107,29 +112,31 @@ class Departments{
                 "department_name" => $this->department_name,
                 "department_datetime" => $this->department_datetime,
                 "department_aid" => $this->department_aid,
-            ]); 
-        }catch (PDOException $ex) {
+            ]);
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
-    public function delete() {
-        try{
+    public function delete()
+    {
+        try {
             $sql = "delete from {$this->tblDepartments} ";
             $sql .= "where department_aid = :department_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "department_aid" => $this->department_aid,
             ]);
-        }catch (PDOException $ex) {
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
-    public function active() {
-        try{
+    public function active()
+    {
+        try {
             $sql = "update {$this->tblDepartments} set ";
             $sql .= "department_is_active = :department_is_active, ";
             $sql .= "department_datetime = :department_datetime ";
@@ -140,28 +147,24 @@ class Departments{
                 "department_datetime" => $this->department_datetime,
                 "department_aid" => $this->department_aid,
             ]);
-        }catch (PDOException $ex) {
+        } catch (PDOException $ex) {
             $query = false;
         }
         return $query;
     }
 
     public function checkName()
-  {
-    try {
-      $sql = "select department_name from {$this->tblDepartments} ";
-      $sql .= "where department_name = :department_name ";
-      $query = $this->connection->prepare($sql);
-      $query->execute([
-        "department_name" => "{$this->department_name}",
-      ]);
-    } catch (PDOException $ex) {
-      $query = false;
+    {
+        try {
+            $sql = "select department_name from {$this->tblDepartments} ";
+            $sql .= "where department_name = :department_name ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "department_name" => "{$this->department_name}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
     }
-    return $query;
-  }
-
-  
-
-
 }

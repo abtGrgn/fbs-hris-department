@@ -3,19 +3,26 @@ import Header from "@/components/partials/Header";
 import Navigation from "@/components/partials/Navigation";
 import React from "react";
 import { MdOutlineAdd } from "react-icons/md";
-import LeaveBenefitsTable from "./LeaveBenefitsTable";
-import ModalAddLeaveBenefits from "./ModalAddLeaveBenefits";
+import LeaveTypeTable from "./LeaveTypeTable";
+import ModalAddLeaveType from "./ModalAddLeaveType";
 import { StoreContext } from "@/store/storeContext";
-import { setIsAdd } from "@/store/storeAction";
+import { setIsAdd, setIsSettingsOpen } from "@/store/storeAction";
+import ModalSuccess from "@/components/partials/modal/ModalSuccess";
+import ModalError from "@/components/partials/modal/ModalError";
 
-const LeaveBenefits = () => {
+const LeaveType = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [leaveBenefitsEdit, setLeaveBenefitsEdit] = React.useState(null);
+  const [leaveTypeEdit, setLeaveTypeEdit] = React.useState(null);
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
-    setLeaveBenefitsEdit(null);
+    setLeaveTypeEdit(null);
   };
+
+  // used para mapanatili na bukas ang settings/submenu kahit ma-refresh
+  React.useEffect(() => {
+    dispatch(setIsSettingsOpen(true));
+  }, []);
 
   return (
     <>
@@ -31,14 +38,21 @@ const LeaveBenefits = () => {
                 Add
               </button>
             </div>
-            <h2 className="text-lg font-bold -translate-y-5">Leave Benefits</h2>
-            <LeaveBenefitsTable setLeaveBenefitsEdit={setLeaveBenefitsEdit} />
+            <h2>Leave Type</h2>
+            <LeaveTypeTable setLeaveTypeEdit={setLeaveTypeEdit} />
           </div>
         </div>
       </div>
-      {store.isAdd && <ModalAddLeaveBenefits setLeaveBenefitsEdit={setLeaveBenefitsEdit} leaveBenefitsEdit={leaveBenefitsEdit}/>}
+      {store.success && <ModalSuccess/>}
+      {store.isAdd && (
+        <ModalAddLeaveType
+          setLeaveTypeEdit={setLeaveTypeEdit}
+          leaveTypeEdit={leaveTypeEdit}
+        />
+      )}
+      {store.error && <ModalError/>}
     </>
   );
 };
 
-export default LeaveBenefits;
+export default LeaveType;
