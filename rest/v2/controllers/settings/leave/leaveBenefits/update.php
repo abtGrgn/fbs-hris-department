@@ -20,19 +20,17 @@ if (array_key_exists("leavebenefitsid", $_GET)) {
 
   $leave_benefits->leave_benefits_datetime = date("Y-m-d H:i:s");
   checkId($leave_benefits->leave_benefits_aid);
- 
 
-//checks current data to avoid same entries from being updated
-$leave_benefits_job_title_id_old = checkIndex($data, 'leave_benefits_job_title_id');
-$leave_benefits_leave_type_id_old = checkIndex($data, 'leave_benefits_leave_type_id');
-compareName($leave_benefits, $leave_benefits_job_title_id_old, $leave_benefits->leave_benefits_job_title_id, $leave_benefits_leave_type_id_old, $leave_benefits->$leave_benefits->leave_benefits_leave_type_id_old);
+
+  //checks current data to avoid same entries from being updated
+  $leave_benefits_job_title_id_old = checkIndex($data, 'leave_benefits_job_title_id_old');
+  $leave_benefits_leave_type_id_old = checkIndex($data, 'leave_benefits_leave_type_id_old');
+  compareTwoValues($leave_benefits, $leave_benefits_job_title_id_old, $leave_benefits->leave_benefits_job_title_id, $leave_benefits_leave_type_id_old, $leave_benefits->leave_benefits_leave_type_id);
 
   // update
-   $query = checkUpdate($leave_benefits);
-   returnSuccess($leave_benefits, "leave_benefits", $query);
-
- 
+  $query = checkUpdate($leave_benefits);
+  returnSuccess($leave_benefits, "leave_benefits", $query);
 }
 
 // return 404 error if endpoint not available
- checkEndpoint();
+checkEndpoint();

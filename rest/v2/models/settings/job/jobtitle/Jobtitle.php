@@ -86,7 +86,7 @@ class Jobtitle{
             $sql .= "{$this->tblJobTitle} as title, ";
             $sql .= "{$this->tblJobLevel} as level ";
             $sql .= "where title.job_title_name like :job_title_name ";
-            $sql .= "and title.job_title_job_level_id = level.job_level_aid ";
+            $sql .= "and title.job_title_job_level_id = level.job_level_aid "; //declared just to show the job level in the table
             $sql .= "order by job_title_is_active desc, "; //para nasa baba ng table ang mga inactive or archived 
             $sql .= "job_title_aid asc ";
             $query = $this->connection->prepare($sql);

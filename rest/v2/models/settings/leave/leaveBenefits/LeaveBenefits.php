@@ -110,13 +110,12 @@ class LeaveBenefits
             $sql .= "{$this->tblLeaveBenefits} as ben, ";
             $sql .= "{$this->tblLeaveType} as type, ";
             $sql .= "{$this->tblJobTitle} as title, ";
-            $sql .= "{$this->tblJobLevel} as level";
-            $sql .= "where ben.leave_benefits_job_level_id like :leave_benefits_job_level_id";
-            $sql .= "and ben.leave_benefits_job_level_id = level.job_level_aid";
-            $sql .= "and ben.leave_benefits_job_title_id = title.job_title_aid";
-            $sql .= "and ben.leave_benefits_leave_type_id = type.leave_type_aid";
-            $sql .= "order by leave_benefits_is_active desc,"; //para nasa baba ng table ang mga inactive or archived
-            $sql .= "leave_benefits_aid asc ";
+            $sql .= "{$this->tblJobLevel} as level ";
+            $sql .= "where ben.leave_benefits_job_level_id like = :level.job_level_aid ";
+            $sql .= "and ben.leave_benefits_job_title_id = title.job_title_aid ";
+            $sql .= "and ben.leave_benefits_leave_type_id = type.leave_type_aid ";
+            $sql .= "order by ben.leave_benefits_is_active desc, "; //para nasa baba ng table ang mga inactive or archived
+            $sql .= "ben.leave_benefits_aid asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "leave_benefits_job_level_id" => "%{$this->leave_benefits_search}%",
@@ -169,7 +168,7 @@ class LeaveBenefits
             $sql .= "leave_benefits_job_level_id = :leave_benefits_job_level_id, ";
             $sql .= "leave_benefits_job_title_id = :leave_benefits_job_title_id, ";
             $sql .= "leave_benefits_leave_type_id = :leave_benefits_leave_type_id, ";
-            $sql .= "leave_benefits_days = :leave_benefits_days, ";
+            $sql .= "leave_benefits_days= :leave_benefits_days, ";
             $sql .= "leave_benefits_datetime = :leave_benefits_datetime ";
             $sql .= "where leave_benefits_aid = :leave_benefits_aid ";
             $query = $this->connection->prepare($sql);
@@ -225,8 +224,8 @@ class LeaveBenefits
     {
         try {
             $sql = "select leave_benefits_job_title_id, leave_benefits_leave_type_id from {$this->tblLeaveBenefits} ";
-            $sql .= "where leave_benefits_job_title_id = :leave_benefits_job_title_id";
-            $sql .= "and leave_benefits_leave_type_id = :leave_benefits_leave_type_id";
+            $sql .= "where leave_benefits_job_title_id = :leave_benefits_job_title_id ";
+            $sql .= "and leave_benefits_leave_type_id = :leave_benefits_leave_type_id ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "leave_benefits_job_title_id" => "{$this->leave_benefits_job_title_id}",

@@ -15,7 +15,12 @@ import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import * as Yup from "yup";
 
-const ModalAddLeaveBenefits = ({ leaveBenefitsEdit }) => {
+const ModalAddLeaveBenefits = ({
+  leaveBenefitsEdit,
+  joblevel,
+  jobtitle,
+  leavetype,
+}) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const handleClose = () => {
     dispatch(setIsAdd(false));
@@ -81,7 +86,7 @@ const ModalAddLeaveBenefits = ({ leaveBenefitsEdit }) => {
       ? leaveBenefitsEdit.leave_benefits_days
       : "",
 
-      leave_benefits_job_title_id_old: leaveBenefitsEdit
+    leave_benefits_job_title_id_old: leaveBenefitsEdit
       ? leaveBenefitsEdit.leave_benefits_job_title_id
       : "",
     leave_benefits_leave_type_id_old: leaveBenefitsEdit
@@ -124,11 +129,14 @@ const ModalAddLeaveBenefits = ({ leaveBenefitsEdit }) => {
                           name="leave_benefits_job_level_id"
                           disabled={mutation.isPending}
                         >
+                          <option value="" hidden></option>
                           {activeJoblevel.length === 0 ? (
                             <option value="">No Data</option>
                           ) : (
                             activeJoblevel.map((item, key) => (
-                              <option value={item.job_level_aid} key={key}>{item.job_level_level}</option>
+                              <option value={item.job_level_aid} key={key}>
+                                {item.job_level_level}
+                              </option>
                             ))
                           )}
                         </InputSelect>
@@ -139,11 +147,14 @@ const ModalAddLeaveBenefits = ({ leaveBenefitsEdit }) => {
                           name="leave_benefits_job_title_id"
                           disabled={mutation.isPending}
                         >
+                          <option value="" hidden></option>
                           {activeJobtitle.length === 0 ? (
                             <option value="">No Data</option>
                           ) : (
                             activeJobtitle.map((item, key) => (
-                              <option value={item.job_title_aid} key={key}>{item.job_title_name}</option>
+                              <option value={item.job_title_aid} key={key}>
+                                {item.job_title_name}
+                              </option>
                             ))
                           )}
                         </InputSelect>
@@ -154,11 +165,14 @@ const ModalAddLeaveBenefits = ({ leaveBenefitsEdit }) => {
                           name="leave_benefits_leave_type_id"
                           disabled={mutation.isPending}
                         >
+                          <option value="" hidden></option>
                           {activeLeaveType.length === 0 ? (
                             <option value="">No Data</option>
                           ) : (
                             activeLeaveType.map((item, key) => (
-                              <option value={item.leave_type_aid} key={key}>{item.leave_type_name}</option>
+                              <option value={item.leave_type_aid} key={key}>
+                                {item.leave_type_name}
+                              </option>
                             ))
                           )}
                         </InputSelect>
@@ -166,6 +180,7 @@ const ModalAddLeaveBenefits = ({ leaveBenefitsEdit }) => {
                       <div className="input-wrapper">
                         <InputText
                           label="*Day(S)"
+                          type="number"
                           name="leave_benefits_days"
                           disabled={mutation.isPending}
                         />
@@ -174,9 +189,11 @@ const ModalAddLeaveBenefits = ({ leaveBenefitsEdit }) => {
 
                     <div className="form-action">
                       <div className="form-btn">
-                        <button className="btn-save rounded-md" type="submit"
-                         disabled={mutation.isPending || !props.dirty} // pag may nilagay sa form "enable ang button" pag wala "babalik sa disabled ang button"
-                         >
+                        <button
+                          className="btn-save rounded-md"
+                          type="submit"
+                          disabled={mutation.isPending || !props.dirty} // pag may nilagay sa form "enable ang button" pag wala "babalik sa disabled ang button"
+                        >
                           {mutation.isPending ? <ButtonSpinner /> : "Save"}
                         </button>
                         <button

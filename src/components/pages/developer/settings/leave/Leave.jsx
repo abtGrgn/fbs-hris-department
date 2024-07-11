@@ -24,19 +24,19 @@ const Leave = () => {
             <div className="list-content-button">
               <Link to="/settings/leave/leave-type">
                 <button className="button">
-                  <span className="font-semibold">
-                    <BiCategory size={14} />
+                  <span>
+                    <BiCategory className="text-[14px]" />
                     Leave Type
-                    <GoChevronRight className="group-hover:bg-[#9f1659] group-hover:text-white duration-200 rounded-md inline-block w-[2rem] h-[2rem] py-1" />
+                    <GoChevronRight className="group-hover:bg-[#9f1659] group-hover:text-white duration-200 rounded-md inline-block w-[1rem] h-[2rem] py-1" />
                   </span>
                 </button>
               </Link>
               <Link to="/settings/leave/leave-benefits">
                 <button className="button">
-                  <span className="font-semibold">
-                    <BiCategory size={14} />
+                  <span>
+                    <BiCategory className="text-[14px]" />
                     Leave Benefits
-                    <GoChevronRight className="group-hover:bg-[#9f1659] group-hover:text-white duration-200 rounded-md inline-block w-[2rem] h-[2rem] py-1" />
+                    <GoChevronRight className="group-hover:bg-[#9f1659] group-hover:text-white duration-200 rounded-md inline-block w-[1rem] h-[2rem] py-1" />
                   </span>
                 </button>
               </Link>

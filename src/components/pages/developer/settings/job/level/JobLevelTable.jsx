@@ -113,7 +113,7 @@ const JobLevelTable = ({ setJoblevelEdit }) => {
               <option value="inactive">Inactive</option>
             </select>
           </div>
-          <div className="count flex items-center gap-2">
+          <div className="count">
             <span>
               <FaUserGroup className="text-gray-500" />
             </span>

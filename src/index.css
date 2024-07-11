@@ -41,7 +41,7 @@
     @apply text-lg font-bold;
   }
   .list-content-button button {
-    @apply flex items-center justify-between text-sm  w-full border-b border-gray-300 py-3;
+    @apply flex items-center justify-between text-sm  w-full border-b border-gray-300 py-1 hover:text-activeState;
   }
 
   .list-content-button button span {
@@ -308,7 +308,7 @@
     @apply border border-solid border-gray-300 p-2 rounded-lg w-full h-[40px] truncate relative text-xs focus:border-[#9f1659];
   }
   select {
-    @apply  border border-solid border-gray-300 p-2 rounded-lg w-full text-gray-400 h-[32px] truncate relative text-xs focus:border-[#9f1659]
+    @apply  border border-solid border-gray-300 px-2 rounded-lg w-full text-gray-400 h-[32px] truncate relative text-xs focus:border-[#9f1659]
   }
   select option{
     @apply text-black
@@ -382,7 +382,9 @@ textarea{
 .table-freezev2 table th:nth-child(3){
   @apply bg-[#3b82f6] sticky left-[14rem] 
 }
-
+.count{
+  @apply flex items-center gap-2 text-sm
+}
 
 
 }

@@ -113,7 +113,7 @@ const LeaveTypeTable = ({ setLeaveTypeEdit }) => {
               <option value="inactive">Inactive</option>
             </select>
           </div>
-          <div className="count flex items-center gap-2 text-sm">
+          <div className="count ">
             <span>
               <FaUserGroup className="text-gray-500" />
             </span>

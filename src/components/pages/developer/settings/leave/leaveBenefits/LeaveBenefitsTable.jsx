@@ -66,7 +66,7 @@ const LeaveBenefitsTable = ({ setLeaveBenefitsEdit }) => {
   };
 
   const handleArchive = (item) => {
-    setIsData(item.leave_benefits_job_level_id);
+    setIsData(item.job_level_level);
     dispatch(setIsArchive(true));
     setId(item.leave_benefits_aid);
     setIsArchiving(true);
@@ -74,7 +74,7 @@ const LeaveBenefitsTable = ({ setLeaveBenefitsEdit }) => {
   };
 
   const handleRestore = (item) => {
-    setIsData(item.leave_benefits_job_level_id);
+    setIsData(item.job_level_level);
     dispatch(setIsRestore(true));
     setId(item.leave_benefits_aid);
     setIsArchiving(false);
@@ -82,7 +82,7 @@ const LeaveBenefitsTable = ({ setLeaveBenefitsEdit }) => {
   };
 
   const handleDelete = (item) => {
-    setIsData(item.leave_benefits_job_level_id);
+    setIsData(item.job_level_level);
     dispatch(setIsDelete(true));
     setId(item.leave_benefits_aid);
   };
@@ -107,11 +107,11 @@ const LeaveBenefitsTable = ({ setLeaveBenefitsEdit }) => {
               <option value="inactive">Inactive</option>
             </select>
           </div>
-          <div className="count flex items-center gap-2">
+          <div className="count">
             <span>
               <FaUserGroup className="text-gray-500" />
             </span>
-            <h4>1</h4>
+            {result?.pages[0].data.length}
           </div>
         </div>
         <div className="search">
@@ -179,9 +179,9 @@ const LeaveBenefitsTable = ({ setLeaveBenefitsEdit }) => {
                         <Status text="Inactive" />
                       )}
                     </td>
-                    <td>{item.leave_benefits_job_level_id}</td>
-                    <td>{item.leave_benefits_job_title_id}</td>
-                    <td>{item.leave_benefits_leave_type_id}</td>
+                    <td>{item.job_level_level}</td>
+                    <td>{item.job_title_name}</td>
+                    <td>{item.leave_type_name}</td>
                     <td>{item.leave_benefits_days}</td>
                     <td className="flex gap-3 justify-end">
                       {item.leave_benefits_is_active ? (

@@ -6,6 +6,7 @@ export default {
       screens: {},
       colors: {
         accent: "#1c74e9",
+        activeState: "#ffa700",
       },
 
       backgroundColor: {
